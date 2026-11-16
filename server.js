@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_KEY = process.env.ADMIN_KEY || 'luise1911';
+const ADMIN_KEY = process.env.ADMIN_KEY || 'luise-19h-k7q2';
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('localhost') && process.env.PGSSL !== 'off'
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const limpa = (s, max) => String(s ?? '').trim().slice(0, max);
 
 app.get('/api/evento', (req, res) => {
-  res.json({ local: process.env.EVENT_LOCAL || '', mapa: process.env.EVENT_MAPA || '' });
+  res.json({ local: process.env.EVENT_LOCAL || 'Passagem Emílio Martins, 92 — entre Chaco e Jabatiteua', mapa: process.env.EVENT_MAPA || 'https://www.google.com/maps/search/?api=1&query=Passagem+Emilio+Martins+92+Marco+Belem+PA' });
 });
 
 // lista pública: só nome e quantidade de quem confirmou
