@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lista de convidados · Luise</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --noite:#1a1226; --linha:#3a2d4d; --ouro:#e3c58a; --texto:#f5eef6; --suave:#b9aec4; --rosa:#f2bfcf; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--noite); color:var(--texto); font:300 15px/1.5 "Jost", system-ui, sans-serif; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
+  main { max-width: 980px; margin: 0 auto; display: grid; gap: 20px; }
+  h1 { font-family:"Bodoni Moda", serif; font-style: italic; font-weight: 500; color: var(--ouro); margin: 0; font-size: 34px; }
+  .resumo { display:flex; flex-wrap:wrap; gap:10px; }
+  .resumo div { border:1px solid var(--linha); border-radius:3px; padding:10px 16px; min-width: 130px; }
+  .resumo b { display:block; font-size:28px; font-weight:500; color:var(--ouro); font-variant-numeric: tabular-nums; }
+  .resumo span { color:var(--suave); font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
+  .tabela { overflow-x:auto; border:1px solid var(--linha); border-radius:3px; }
+  table { width:100%; border-collapse:collapse; min-width: 680px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--linha); vertical-align: top; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:var(--ouro); font-weight:500; }
+  td.n { font-variant-numeric: tabular-nums; }
+  .pill { font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid; white-space: nowrap; }
+  .sim { color:#a8e6c3; } .nao { color:var(--rosa); }
+  button { background:none; border:1px solid var(--linha); color:var(--suave); border-radius:3px; padding:4px 10px; cursor:pointer; font: inherit; }
+  button.conf { border-color: var(--rosa); color: var(--rosa); }
+  .acoes { display:flex; gap:8px; flex-wrap: wrap; }
+  .acoes button { color: var(--ouro); border-color: var(--ouro); padding: 8px 14px; }
+  form { display:flex; gap:8px; flex-wrap:wrap; }
+  input { background:rgba(0,0,0,.25); border:1px solid var(--linha); color:var(--texto); padding:10px 12px; border-radius:3px; font: inherit; }
+  .erro { color: var(--rosa); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lista de convidados</h1>
+  <form id="login" hidden>
+    <input id="chave" type="password" placeholder="Chave de acesso" autocomplete="current-password">
+    <button type="submit">Entrar</button>
+    <span class="erro" id="erro"></span>
+  </form>
+  <div id="painel" hidden>
+    <div class="resumo">
+      <div><b id="r-pessoas">0</b><span>pessoas vão</span></div>
+      <div><b id="r-sim">0</b><span>respostas sim</span></div>
+      <div><b id="r-nao">0</b><span>não vão</span></div>
+    </div>
+    <p class="acoes"><button type="button" id="copiar">Copiar lista</button><button type="button" id="atualizar">Atualizar</button></p>
+    <div class="tabela"><table>
+      <thead><tr><th>Nome</th><th>Resposta</th><th>Pessoas</th><th>WhatsApp</th><th>Recado</th><th>Quando</th><th></th></tr></thead>
+      <tbody id="linhas"></tbody>
+    </table></div>
+  </div>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let chave = new URLSearchParams(location.search).get('chave') || (() => { try { return sessionStorage.getItem('chave') || ''; } catch { return ''; } })();
+  let dados = [];
+
+  async function carrega() {
+    const r = await fetch('/api/admin/lista?chave=' + encodeURIComponent(chave));
+    if (!r.ok) { $('login').hidden = false; $('painel').hidden = true; if (chave) $('erro').textContent = 'Chave inválida.'; return; }
+    try { sessionStorage.setItem('chave', chave); } catch {}
+    dados = await r.json();
+    $('login').hidden = true; $('painel').hidden = false;
+    const sim = dados.filter(d => d.vai);
+    $('r-pessoas').textContent = sim.reduce((s, d) => s + d.pessoas, 0);
+    $('r-sim').textContent = sim.length;
+    $('r-nao').textContent = dados.length - sim.length;
+    const tb = $('linhas'); tb.innerHTML = '';
+    for (const d of dados) {
+      const tr = document.createElement('tr');
+      const cel = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt ?? ''; if (cls) td.className = cls; tr.appendChild(td); return td; };
+      cel(d.nome);
+      const tdR = cel(''); const p = document.createElement('span'); p.className = 'pill ' + (d.vai ? 'sim' : 'nao'); p.textContent = d.vai ? 'Vai' : 'Não vai'; tdR.appendChild(p);
+      cel(d.vai ? d.pessoas : '–', 'n');
+      cel(d.telefone);
+      cel(d.mensagem);
+      cel(new Date(d.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }), 'n');
+      const tdB = cel(''); const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Remover';
+      b.onclick = async () => {
+        if (b.dataset.ok !== '1') { b.dataset.ok = '1'; b.textContent = 'Confirmar?'; b.className = 'conf'; return; }
+        await fetch('/api/admin/' + d.id + '?chave=' + encodeURIComponent(chave), { method: 'DELETE' });
+        carrega();
+      };
+      tdB.appendChild(b);
+      tb.appendChild(tr);
+    }
+  }
+  $('login').addEventListener('submit', (e) => { e.preventDefault(); chave = $('chave').value; carrega(); });
+  $('atualizar').onclick = carrega;
+  $('copiar').onclick = async () => {
+    const txt = dados.filter(d => d.vai).map((d, i) => `${i + 1}. ${d.nome}${d.pessoas > 1 ? ' (+' + (d.pessoas - 1) + ')' : ''}`).join('\n');
+    try { await navigator.clipboard.writeText(txt); $('copiar').textContent = 'Copiado!'; } catch { $('copiar').textContent = 'Não foi possível copiar'; }
+    setTimeout(() => $('copiar').textContent = 'Copiar lista', 1800);
+  };
+  carrega();
+</script>
+</body>
+</html>
