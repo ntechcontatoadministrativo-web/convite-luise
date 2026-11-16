@@ -5,96 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Lista de convidados · Luise</title>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --noite:#1a1226; --linha:#3a2d4d; --ouro:#e3c58a; --texto:#f5eef6; --suave:#b9aec4; --rosa:#f2bfcf; color-scheme: dark; }
+  :root { --papel:#f8ece6; --papel-2:#fdf6f2; --vinho:#8c1c3a; --rosa:#e9a8b5; --rosa-claro:#f6d5db; --tinta:#5a2a35; --suave:#9a6f78; color-scheme: light; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--noite); color:var(--texto); font:300 15px/1.5 "Jost", system-ui, sans-serif; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
-  main { max-width: 980px; margin: 0 auto; display: grid; gap: 20px; }
-  h1 { font-family:"Bodoni Moda", serif; font-style: italic; font-weight: 500; color: var(--ouro); margin: 0; font-size: 34px; }
+  body { margin:0; background:var(--papel); color:var(--tinta); font:400 17px/1.5 "Cormorant Garamond", Georgia, serif; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
+  main { max-width: 1000px; margin: 0 auto; display: grid; gap: 22px; }
+  h1 { font: 400 52px/1 "Great Vibes", cursive; color: var(--vinho); margin: 0; }
+  h2 { font: 400 34px/1 "Great Vibes", cursive; color: var(--vinho); margin: 0 0 10px; }
   .resumo { display:flex; flex-wrap:wrap; gap:10px; }
-  .resumo div { border:1px solid var(--linha); border-radius:3px; padding:10px 16px; min-width: 130px; }
-  .resumo b { display:block; font-size:28px; font-weight:500; color:var(--ouro); font-variant-numeric: tabular-nums; }
-  .resumo span { color:var(--suave); font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
-  .tabela { overflow-x:auto; border:1px solid var(--linha); border-radius:3px; }
-  table { width:100%; border-collapse:collapse; min-width: 680px; }
-  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--linha); vertical-align: top; }
-  th { font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:var(--ouro); font-weight:500; }
-  td.n { font-variant-numeric: tabular-nums; }
-  .pill { font-size:12px; padding:2px 10px; border-radius:999px; border:1px solid; white-space: nowrap; }
-  .sim { color:#a8e6c3; } .nao { color:var(--rosa); }
-  button { background:none; border:1px solid var(--linha); color:var(--suave); border-radius:3px; padding:4px 10px; cursor:pointer; font: inherit; }
-  button.conf { border-color: var(--rosa); color: var(--rosa); }
-  .acoes { display:flex; gap:8px; flex-wrap: wrap; }
-  .acoes button { color: var(--ouro); border-color: var(--ouro); padding: 8px 14px; }
-  form { display:flex; gap:8px; flex-wrap:wrap; }
-  input { background:rgba(0,0,0,.25); border:1px solid var(--linha); color:var(--texto); padding:10px 12px; border-radius:3px; font: inherit; }
-  .erro { color: var(--rosa); }
+  .resumo div { background:var(--papel-2); border:1px solid var(--rosa); border-radius:6px; padding:10px 18px; min-width: 140px; }
+  .resumo b { display:block; font-size:34px; font-weight:600; color:var(--vinho); font-variant-numeric: lining-nums tabular-nums; line-height: 1.1; }
+  .resumo span { color:var(--suave); font-size:13px; text-transform:uppercase; letter-spacing:.14em; }
+  .caixa { background: var(--papel-2); border:1px solid var(--rosa); border-radius:6px; padding: 18px; }
+  .tabela { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; min-width: 620px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--rosa-claro); vertical-align: top; }
+  th { font-size:13px; text-transform:uppercase; letter-spacing:.14em; color:var(--vinho); font-weight:600; }
+  td.n { font-variant-numeric: lining-nums tabular-nums; }
+  .pill { font-size:14px; padding:1px 10px; border-radius:999px; white-space: nowrap; font-weight: 600; }
+  .sim { background: #e3f1e4; color:#2f6b3a; } .nao { background: var(--rosa-claro); color: var(--vinho); }
+  .pend { display:flex; flex-wrap:wrap; gap:8px; }
+  .pend span { border:1px dashed var(--rosa); border-radius:999px; padding:3px 12px; }
+  button { background:#fff; border:1px solid var(--rosa); color:var(--tinta); border-radius:999px; padding:5px 14px; cursor:pointer; font: inherit; }
+  button.conf { border-color: var(--vinho); color: #fff; background: var(--vinho); }
+  .acoes { display:flex; gap:8px; flex-wrap: wrap; margin: 0; }
+  .acoes button { background: var(--vinho); color: #fff3f5; border-color: var(--vinho); padding: 8px 18px; }
+  form { display:flex; gap:8px; flex-wrap:wrap; align-items: center; }
+  input { background:#fff; border:1px solid var(--rosa); color:var(--tinta); padding:10px 16px; border-radius:999px; font: inherit; }
+  .erro { color: var(--vinho); font-style: italic; }
+  .vazio { color: var(--suave); font-style: italic; margin: 0; }
+  [hidden] { display: none !important; }
+  #painel { display: grid; gap: 22px; }
 </style>
 </head>
 <body>
 <main>
   <h1>Lista de convidados</h1>
   <form id="login" hidden>
-    <input id="chave" type="password" placeholder="Chave de acesso" autocomplete="current-password">
+    <input id="chave" type="password" placeholder="Senha" autocomplete="current-password">
     <button type="submit">Entrar</button>
     <span class="erro" id="erro"></span>
   </form>
   <div id="painel" hidden>
     <div class="resumo">
       <div><b id="r-pessoas">0</b><span>pessoas vão</span></div>
-      <div><b id="r-sim">0</b><span>respostas sim</span></div>
+      <div><b id="r-sim">0</b><span>confirmaram</span></div>
       <div><b id="r-nao">0</b><span>não vão</span></div>
+      <div><b id="r-pend">0</b><span>sem resposta</span></div>
     </div>
-    <p class="acoes"><button type="button" id="copiar">Copiar lista</button><button type="button" id="atualizar">Atualizar</button></p>
-    <div class="tabela"><table>
-      <thead><tr><th>Nome</th><th>Resposta</th><th>Pessoas</th><th>WhatsApp</th><th>Recado</th><th>Quando</th><th></th></tr></thead>
-      <tbody id="linhas"></tbody>
-    </table></div>
+    <p class="acoes"><button type="button" id="copiar">Copiar lista de quem vai</button><button type="button" id="copiar-pend">Copiar quem falta responder</button><button type="button" id="atualizar">Atualizar</button></p>
+    <div class="caixa">
+      <h2>Ainda não responderam</h2>
+      <div class="pend" id="pendentes"></div>
+    </div>
+    <div class="caixa">
+      <h2>Respostas</h2>
+      <div class="tabela"><table>
+        <thead><tr><th>Nome</th><th>Resposta</th><th>Pessoas</th><th>Recado</th><th>Quando</th><th></th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table></div>
+      <p class="vazio" id="sem-resp" hidden>Nenhuma resposta ainda.</p>
+    </div>
   </div>
 </main>
 <script>
   const $ = (id) => document.getElementById(id);
   let chave = new URLSearchParams(location.search).get('chave') || (() => { try { return sessionStorage.getItem('chave') || ''; } catch { return ''; } })();
-  let dados = [];
+  let dados = { respostas: [], pendentes: [] };
 
   async function carrega() {
     const r = await fetch('/api/admin/lista?chave=' + encodeURIComponent(chave));
-    if (!r.ok) { $('login').hidden = false; $('painel').hidden = true; if (chave) $('erro').textContent = 'Chave inválida.'; return; }
+    if (!r.ok) { $('login').hidden = false; $('painel').hidden = true; if (chave) $('erro').textContent = 'Senha incorreta.'; return; }
     try { sessionStorage.setItem('chave', chave); } catch {}
     dados = await r.json();
     $('login').hidden = true; $('painel').hidden = false;
-    const sim = dados.filter(d => d.vai);
+    const sim = dados.respostas.filter(d => d.vai);
     $('r-pessoas').textContent = sim.reduce((s, d) => s + d.pessoas, 0);
     $('r-sim').textContent = sim.length;
-    $('r-nao').textContent = dados.length - sim.length;
+    $('r-nao').textContent = dados.respostas.length - sim.length;
+    $('r-pend').textContent = dados.pendentes.length;
+    const pend = $('pendentes'); pend.innerHTML = '';
+    dados.pendentes.forEach(n => { const s = document.createElement('span'); s.textContent = n; pend.appendChild(s); });
+    if (!dados.pendentes.length) pend.innerHTML = '<p class="vazio">Todo mundo respondeu!</p>';
     const tb = $('linhas'); tb.innerHTML = '';
-    for (const d of dados) {
+    $('sem-resp').hidden = dados.respostas.length > 0;
+    for (const d of dados.respostas) {
       const tr = document.createElement('tr');
       const cel = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt ?? ''; if (cls) td.className = cls; tr.appendChild(td); return td; };
       cel(d.nome);
-      const tdR = cel(''); const p = document.createElement('span'); p.className = 'pill ' + (d.vai ? 'sim' : 'nao'); p.textContent = d.vai ? 'Vai' : 'Não vai'; tdR.appendChild(p);
+      const p = document.createElement('span'); p.className = 'pill ' + (d.vai ? 'sim' : 'nao'); p.textContent = d.vai ? 'Vai' : 'Não vai'; cel('').appendChild(p);
       cel(d.vai ? d.pessoas : '–', 'n');
-      cel(d.telefone);
       cel(d.mensagem);
       cel(new Date(d.criado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }), 'n');
-      const tdB = cel(''); const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Remover';
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Remover';
       b.onclick = async () => {
         if (b.dataset.ok !== '1') { b.dataset.ok = '1'; b.textContent = 'Confirmar?'; b.className = 'conf'; return; }
         await fetch('/api/admin/' + d.id + '?chave=' + encodeURIComponent(chave), { method: 'DELETE' });
         carrega();
       };
-      tdB.appendChild(b);
+      cel('').appendChild(b);
       tb.appendChild(tr);
     }
   }
+  async function copia(btn, txt, rotulo) {
+    try { await navigator.clipboard.writeText(txt); btn.textContent = 'Copiado!'; } catch { btn.textContent = 'Não foi possível copiar'; }
+    setTimeout(() => btn.textContent = rotulo, 1800);
+  }
   $('login').addEventListener('submit', (e) => { e.preventDefault(); chave = $('chave').value; carrega(); });
   $('atualizar').onclick = carrega;
-  $('copiar').onclick = async () => {
-    const txt = dados.filter(d => d.vai).map((d, i) => `${i + 1}. ${d.nome}${d.pessoas > 1 ? ' (+' + (d.pessoas - 1) + ')' : ''}`).join('\n');
-    try { await navigator.clipboard.writeText(txt); $('copiar').textContent = 'Copiado!'; } catch { $('copiar').textContent = 'Não foi possível copiar'; }
-    setTimeout(() => $('copiar').textContent = 'Copiar lista', 1800);
-  };
+  $('copiar').onclick = () => copia($('copiar'),
+    dados.respostas.filter(d => d.vai).map((d, i) => `${i + 1}. ${d.nome}${d.pessoas > 1 ? ' (+' + (d.pessoas - 1) + ')' : ''}`).join('\n'), 'Copiar lista de quem vai');
+  $('copiar-pend').onclick = () => copia($('copiar-pend'), dados.pendentes.join('\n'), 'Copiar quem falta responder');
   carrega();
 </script>
 </body>

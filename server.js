@@ -29,6 +29,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const limpa = (s, max) => String(s ?? '').trim().slice(0, max);
 
+const CONVIDADOS = [
+  'Thais', 'Marcelo', 'Renato', 'Sachie', 'Akemi', 'Henrique', 'Maria Clara', 'Maria Eduarda', 'Gabi', 'Laura',
+  'Mateus', 'Quezia', 'Mari', 'Enzo', 'Ricardinho', 'Andee', 'Lissa', 'Gio', 'Felipe', 'Felipe Preto',
+  'Sofia', 'Poli', 'Ricardo', 'Lumi', 'Bemicio', 'Maria Helena', 'Eliel', 'Paula', 'Vivian', 'Klautau',
+].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+app.get('/api/convidados', (req, res) => res.json(CONVIDADOS));
+
 app.get('/api/evento', (req, res) => {
   res.json({ local: process.env.EVENT_LOCAL || 'Passagem Emílio Martins, 92 — entre Chaco e Jabatiteua', mapa: process.env.EVENT_MAPA || 'https://www.google.com/maps/search/?api=1&query=Passagem+Emilio+Martins+92+Marco+Belem+PA' });
 });
@@ -83,7 +91,8 @@ function exigeAdmin(req, res, next) {
 
 app.get('/api/admin/lista', exigeAdmin, async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM confirmacoes ORDER BY criado_em DESC');
-  res.json(rows);
+  const responderam = new Set(rows.map(r => r.nome.toLowerCase()));
+  res.json({ respostas: rows, pendentes: CONVIDADOS.filter(n => !responderam.has(n.toLowerCase())) });
 });
 
 app.delete('/api/admin/:id', exigeAdmin, async (req, res) => {

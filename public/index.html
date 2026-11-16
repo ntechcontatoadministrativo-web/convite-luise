@@ -3,299 +3,315 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aniversário da Luise</title>
-<meta name="description" content="Você está convidado para o aniversário de Luise Sawada — 19/11, às 19h. Confirme sua presença.">
-<meta property="og:title" content="Aniversário da Luise Sawada">
-<meta property="og:description" content="19 de novembro, às 19h. Toque para confirmar sua presença.">
-<meta name="theme-color" content="#1a1226">
+<title>Os 19 anos da Luise</title>
+<meta name="description" content="Venha comemorar os 19 anos da Luise — 19 de novembro, às 19h. Toque para abrir o convite e confirmar sua presença.">
+<meta property="og:title" content="Os 19 anos da Luise 🎀">
+<meta property="og:description" content="19 de novembro, às 19h. Toque para abrir o convite e confirmar sua presença.">
+<meta property="og:image" content="https://convite-luise.onrender.com/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f8ece6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  /* Convite noturno: fundo ameixa-escuro, ouro champanhe e rosa-pó; uma coluna centrada como um cartão impresso */
+  /* Papel de carta creme, tinta vinho, fitas e peônias rosa — uma coluna como um cartão aquarelado */
   :root {
-    --noite: #1a1226;
-    --noite-2: #241a33;
-    --linha: #3a2d4d;
-    --ouro: #e3c58a;
-    --ouro-forte: #f1d9a8;
-    --rosa: #f2bfcf;
-    --texto: #f5eef6;
-    --suave: #b9aec4;
-    --erro: #ff9aa8;
-    --ok: #a8e6c3;
-    --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
-    --corpo: "Jost", "Segoe UI", system-ui, sans-serif;
-    color-scheme: dark;
+    --papel: #f8ece6;
+    --papel-2: #fdf6f2;
+    --vinho: #8c1c3a;
+    --vinho-escuro: #6b1029;
+    --rosa: #e9a8b5;
+    --rosa-claro: #f6d5db;
+    --folha: #9aa07a;
+    --tinta: #5a2a35;
+    --suave: #9a6f78;
+    --script: "Great Vibes", "Brush Script MT", cursive;
+    --serifa: "Cormorant Garamond", Garamond, Georgia, serif;
+    color-scheme: light;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0; min-height: 100vh;
+    margin: 0; min-height: 100vh; color: var(--tinta);
     background:
-      radial-gradient(1200px 600px at 50% -10%, #3b2550 0%, transparent 60%),
-      radial-gradient(800px 500px at 100% 100%, #2a1b3a 0%, transparent 60%),
-      var(--noite);
-    color: var(--texto); font-family: var(--corpo); font-weight: 300; font-size: 17px; line-height: 1.6;
+      radial-gradient(700px 420px at 10% 0%, rgba(233,168,181,.28), transparent 70%),
+      radial-gradient(600px 420px at 100% 100%, rgba(233,168,181,.25), transparent 70%),
+      var(--papel);
+    font: 400 19px/1.55 var(--serifa);
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
-    padding-block: max(28px, env(safe-area-inset-top, 0px)) max(40px, env(safe-area-inset-bottom, 0px));
+    padding-block: max(24px, env(safe-area-inset-top, 0px)) max(40px, env(safe-area-inset-bottom, 0px));
     overflow-x: hidden;
   }
-  #brilhos { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-  main { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; display: grid; gap: 28px; }
+  #ceu { position: fixed; inset: 0; pointer-events: none; z-index: 30; }
+  main { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; display: grid; gap: 30px; }
 
-  .cartao {
-    border: 1px solid var(--linha); border-radius: 4px;
-    background: linear-gradient(180deg, rgba(36,26,51,.88), rgba(26,18,38,.92));
-    padding: 44px 28px 40px; text-align: center; position: relative;
+  /* o próprio convite */
+  .convite { margin: 0; position: relative; }
+  .convite img {
+    display: block; width: 100%; height: auto; border-radius: 6px;
+    box-shadow: 0 2px 0 rgba(255,255,255,.7) inset, 0 18px 40px rgba(140,28,58,.18), 0 2px 8px rgba(140,28,58,.12);
   }
-  .cartao::before {
-    content: ""; position: absolute; inset: 8px; border: 1px solid rgba(227,197,138,.28); border-radius: 2px; pointer-events: none;
+
+  .bloco {
+    background: var(--papel-2); border-radius: 6px; padding: 34px 24px 32px; text-align: center; position: relative;
+    box-shadow: 0 12px 30px rgba(140,28,58,.10);
+    border: 1px solid rgba(233,168,181,.55);
   }
-  .rotulo { font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--ouro); font-weight: 500; }
-  h1 {
-    font-family: var(--display); font-weight: 500; font-style: italic;
-    font-size: clamp(54px, 15vw, 88px); line-height: .95; margin: 18px 0 4px; color: var(--ouro-forte);
-    text-wrap: balance;
-  }
-  .sobrenome { font-family: var(--display); font-size: clamp(18px, 5vw, 24px); letter-spacing: .5em; text-transform: uppercase; color: var(--rosa); margin-left: .5em; }
-  .frase { color: var(--suave); max-width: 34ch; margin: 22px auto 0; }
+  .bloco::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(140,28,58,.14); border-radius: 3px; pointer-events: none; }
+  .laco { width: 64px; height: auto; display: block; margin: 0 auto 6px; }
+  h2 { font: 400 clamp(40px, 11vw, 52px)/1.05 var(--script); color: var(--vinho); margin: 0 0 6px; text-wrap: balance; }
+  .sub { color: var(--suave); font-style: italic; margin: 0 0 22px; }
+  .rotulo { font: 600 13px var(--serifa); letter-spacing: .26em; text-transform: uppercase; color: var(--vinho); }
 
-  .data { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; margin: 34px 0 6px; }
-  .data .lado { font-size: 13px; letter-spacing: .24em; text-transform: uppercase; color: var(--suave); border-block: 1px solid var(--linha); padding-block: 8px; }
-  .data .dia { font-family: var(--display); font-size: clamp(56px, 16vw, 76px); line-height: 1; color: var(--texto); font-weight: 600; }
-  .data .dia small { display: block; font-family: var(--corpo); font-size: 12px; letter-spacing: .3em; color: var(--ouro); font-weight: 500; margin-top: 6px; }
+  .infos { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 18px; align-items: start; }
+  .infos .linha { background: rgba(140,28,58,.35); align-self: stretch; }
+  .infos svg { width: 28px; height: 28px; color: var(--vinho); }
+  .infos b { display: block; font: 400 30px/1.1 var(--script); color: var(--vinho); margin-top: 4px; }
+  .infos span { display: block; font-size: 16px; color: var(--tinta); }
+  .infos a { color: var(--vinho); font-size: 16px; }
 
-  .local { margin-top: 26px; font-size: 15px; color: var(--suave); }
-  .local strong { display: block; color: var(--texto); font-weight: 500; font-size: 17px; }
-  .local a { color: var(--ouro); }
-
-  .contagem { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 30px; }
-  .contagem div { border: 1px solid var(--linha); padding: 12px 4px 8px; border-radius: 3px; }
-  .contagem b { display: block; font-family: var(--display); font-size: 30px; font-weight: 500; color: var(--ouro-forte); font-variant-numeric: tabular-nums; line-height: 1.1; }
-  .contagem span { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--suave); }
-  .hoje { margin-top: 30px; font-family: var(--display); font-style: italic; font-size: 24px; color: var(--rosa); }
+  .contagem { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 26px; }
+  .contagem div { background: var(--papel); border-radius: 4px; padding: 10px 4px 6px; border: 1px solid rgba(233,168,181,.7); }
+  .contagem b { display: block; font: 600 30px/1.1 var(--serifa); color: var(--vinho); font-variant-numeric: lining-nums tabular-nums; }
+  .contagem span { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--suave); }
+  .hoje { margin-top: 24px; font: 400 36px var(--script); color: var(--vinho); }
 
   .chamada {
-    margin-top: 34px; display: inline-flex; align-items: center; gap: 10px;
-    background: var(--ouro); color: var(--noite); border: 0; border-radius: 999px;
-    font: 500 15px var(--corpo); letter-spacing: .14em; text-transform: uppercase;
-    padding: 16px 30px; cursor: pointer; text-decoration: none; transition: transform .2s, background .2s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 26px;
+    background: var(--vinho); color: #fff3f5; border: 0; border-radius: 999px; text-decoration: none; cursor: pointer;
+    font: 600 15px var(--serifa); letter-spacing: .2em; text-transform: uppercase; padding: 16px 30px;
+    box-shadow: 0 8px 20px rgba(140,28,58,.25); transition: transform .2s, background .2s;
   }
-  .chamada:hover { background: var(--ouro-forte); transform: translateY(-1px); }
-  .chamada:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+  .chamada:hover { background: var(--vinho-escuro); transform: translateY(-1px); }
+  .chamada[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+  .pulsa { animation: pulsa 2.4s ease-in-out infinite; }
+  @keyframes pulsa { 0%, 100% { box-shadow: 0 8px 20px rgba(140,28,58,.25), 0 0 0 0 rgba(140,28,58,.35); } 50% { box-shadow: 0 8px 20px rgba(140,28,58,.25), 0 0 0 12px rgba(140,28,58,0); } }
+  :focus-visible { outline: 2px solid var(--vinho); outline-offset: 3px; }
 
-  section h2 { font-family: var(--display); font-weight: 500; font-style: italic; font-size: 34px; margin: 0 0 6px; color: var(--ouro-forte); text-align: center; }
-  section > p.sub { text-align: center; color: var(--suave); margin: 0 0 22px; }
+  /* escolher o nome */
+  .busca { width: 100%; background: #fff; border: 1px solid var(--rosa); border-radius: 999px; padding: 12px 18px; font: 400 18px var(--serifa); color: var(--tinta); margin-bottom: 16px; }
+  .nomes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .nome {
+    background: #fff; border: 1px solid var(--rosa); color: var(--tinta); border-radius: 999px; padding: 7px 15px;
+    font: 500 17px var(--serifa); cursor: pointer; transition: background .2s, color .2s, transform .15s;
+  }
+  .nome:hover { transform: translateY(-1px); border-color: var(--vinho); }
+  .nome.sel { background: var(--vinho); border-color: var(--vinho); color: #fff3f5; }
+  .nome.ok::after { content: " ✓"; color: var(--vinho); }
+  .nome.sel.ok::after { color: #fff3f5; }
+  .outro { background: none; border: 0; color: var(--suave); font: italic 400 16px var(--serifa); text-decoration: underline; cursor: pointer; margin-top: 14px; }
+  #campo-outro { margin-top: 12px; }
 
-  form { display: grid; gap: 18px; text-align: left; }
-  .escolha { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .passo2 { margin-top: 26px; display: grid; gap: 18px; justify-items: center; }
+  .ola { font: 400 38px/1.1 var(--script); color: var(--vinho); }
+  .escolha { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
   .escolha input { position: absolute; opacity: 0; pointer-events: none; }
-  .escolha label {
-    border: 1px solid var(--linha); border-radius: 3px; padding: 16px 10px; text-align: center; cursor: pointer;
-    font-weight: 400; transition: border-color .2s, background .2s; display: block;
-  }
-  .escolha label b { display: block; font-family: var(--display); font-size: 22px; font-weight: 500; font-style: italic; }
-  .escolha label span { font-size: 13px; color: var(--suave); }
-  .escolha input:checked + label { border-color: var(--ouro); background: rgba(227,197,138,.1); }
-  .escolha input:focus-visible + label { outline: 2px solid var(--rosa); outline-offset: 2px; }
-  .campo { display: grid; gap: 6px; }
-  .campo label { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); font-weight: 500; }
-  .campo input, .campo textarea {
-    width: 100%; background: rgba(0,0,0,.22); border: 1px solid var(--linha); border-radius: 3px;
-    color: var(--texto); font: 400 16px var(--corpo); padding: 13px 14px;
-  }
-  .campo textarea { resize: vertical; min-height: 80px; }
-  .contador { display: flex; align-items: center; gap: 0; border: 1px solid var(--linha); border-radius: 3px; width: max-content; }
-  .contador button { background: none; border: 0; color: var(--ouro); font-size: 22px; width: 48px; height: 46px; cursor: pointer; }
-  .contador output { min-width: 44px; text-align: center; font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums; }
-  .dica { font-size: 13px; color: var(--suave); }
-  form .chamada { margin: 6px auto 0; justify-self: center; }
-  .chamada[disabled] { opacity: .6; cursor: wait; }
-  .msg { text-align: center; min-height: 1.4em; font-size: 15px; }
-  .msg.erro { color: var(--erro); }
+  .escolha label { border: 1px solid var(--rosa); border-radius: 6px; padding: 14px 8px; cursor: pointer; background: #fff; display: block; transition: background .2s, border-color .2s; }
+  .escolha label b { display: block; font: 400 30px/1.1 var(--script); color: var(--vinho); }
+  .escolha label span { font-size: 15px; color: var(--suave); }
+  .escolha input:checked + label { border-color: var(--vinho); background: var(--rosa-claro); }
+  .escolha input:focus-visible + label { outline: 2px solid var(--vinho); outline-offset: 2px; }
+  .pessoas { display: grid; gap: 6px; justify-items: center; }
+  .contador { display: flex; align-items: center; border: 1px solid var(--rosa); border-radius: 999px; background: #fff; }
+  .contador button { background: none; border: 0; color: var(--vinho); font-size: 24px; width: 48px; height: 44px; cursor: pointer; }
+  .contador output { min-width: 40px; text-align: center; font: 600 22px var(--serifa); font-variant-numeric: lining-nums; }
+  textarea { width: 100%; background: #fff; border: 1px solid var(--rosa); border-radius: 6px; padding: 12px 14px; font: 400 17px var(--serifa); color: var(--tinta); resize: vertical; min-height: 76px; }
+  .msg { min-height: 1.3em; font-size: 16px; color: var(--vinho); font-style: italic; }
 
-  .sucesso { text-align: center; display: grid; gap: 10px; justify-items: center; }
-  .sucesso .selo { width: 74px; height: 74px; border-radius: 50%; border: 1px solid var(--ouro); display: grid; place-items: center; font-family: var(--display); font-size: 34px; color: var(--ouro-forte); font-style: italic; }
-  .sucesso h3 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 30px; margin: 4px 0 0; color: var(--ouro-forte); }
-  .sucesso p { margin: 0; color: var(--suave); max-width: 36ch; }
-  .link { background: none; border: 0; color: var(--ouro); font: inherit; text-decoration: underline; cursor: pointer; padding: 6px; }
+  .sucesso { display: grid; gap: 8px; justify-items: center; }
+  .sucesso .coracao { width: 54px; color: var(--vinho); animation: bate 1.2s ease-in-out infinite; }
+  @keyframes bate { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+  .sucesso p { margin: 0; color: var(--suave); max-width: 32ch; font-style: italic; }
+  .link { background: none; border: 0; color: var(--vinho); font: italic 400 16px var(--serifa); text-decoration: underline; cursor: pointer; padding: 6px; }
 
-  .lista-topo { display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-bottom: 18px; }
-  .lista-topo b { font-family: var(--display); font-size: 46px; font-weight: 500; color: var(--ouro-forte); line-height: 1; font-variant-numeric: tabular-nums; }
-  .lista-topo span { color: var(--suave); }
-  ul.nomes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-  ul.nomes li { border: 1px solid var(--linha); border-radius: 999px; padding: 6px 14px; font-size: 15px; }
-  ul.nomes li small { color: var(--ouro); margin-left: 4px; }
-  .vazio { text-align: center; color: var(--suave); }
+  .total { font: 600 46px/1 var(--serifa); color: var(--vinho); font-variant-numeric: lining-nums; }
+  .confirmados { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .confirmados li { background: var(--rosa-claro); color: var(--vinho-escuro); border-radius: 999px; padding: 5px 14px; font: 500 17px var(--serifa); }
+  .confirmados li small { margin-left: 4px; color: var(--vinho); }
+  .vazio { color: var(--suave); font-style: italic; margin: 10px 0 0; }
 
-  footer { text-align: center; color: var(--suave); font-size: 13px; letter-spacing: .1em; }
+  footer { text-align: center; font: 400 32px var(--script); color: var(--vinho); }
 
-  @media (max-width: 420px) {
-    .cartao { padding: 38px 20px 34px; }
-    .contagem b { font-size: 24px; }
-    .data { gap: 8px; }
-    .data .lado { font-size: 11px; letter-spacing: .16em; }
-  }
-  /* nome com brilho dourado passando */
-  h1 {
-    background: linear-gradient(100deg, var(--ouro) 0%, var(--ouro-forte) 35%, #fff8e6 50%, var(--ouro-forte) 65%, var(--ouro) 100%);
-    background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: brilho 5s ease-in-out infinite; padding-inline: .08em;
-  }
-  @keyframes brilho { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
-  .chamada.pulsa { animation: pulsa 2.4s ease-in-out infinite; }
-  @keyframes pulsa { 0%, 100% { box-shadow: 0 0 0 0 rgba(227,197,138,.45); } 50% { box-shadow: 0 0 0 12px rgba(227,197,138,0); } }
-
-  /* revelação em cascata depois que o envelope abre */
-  .revela > * { transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-  body.fechado .revela > * { opacity: 0; transform: translateY(18px); }
-  body.fechado main > section, body.fechado footer { opacity: 0; }
-  main > section, footer { transition: opacity 1s ease .9s; }
+  /* revelação em cascata */
+  body.fechado main > * { opacity: 0; transform: translateY(24px); }
+  main > * { transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
 
   /* envelope de abertura */
   #envelope {
-    position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; align-content: center; gap: 26px;
-    background: radial-gradient(900px 500px at 50% 30%, #3b2550 0%, transparent 70%), var(--noite);
-    padding: 24px max(16px, env(safe-area-inset-left, 0px)); cursor: pointer; transition: opacity .9s ease .9s, visibility 0s linear 1.8s;
+    position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; align-content: center; gap: 24px;
+    background:
+      radial-gradient(600px 400px at 50% 40%, rgba(233,168,181,.35), transparent 70%), var(--papel);
+    padding: 24px max(16px, env(safe-area-inset-left, 0px)); cursor: pointer;
+    transition: opacity .9s ease 1.3s, visibility 0s linear 2.2s;
   }
   #envelope.aberto { opacity: 0; visibility: hidden; pointer-events: none; }
-  .env { position: relative; width: min(340px, 84vw); aspect-ratio: 3 / 2; perspective: 900px; max-width: 100%; }
-  .env .corpo { position: absolute; inset: 0; border-radius: 6px; background: linear-gradient(160deg, #f6e4c2, #e3c58a); box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+  #envelope .para { font: 400 clamp(34px, 9vw, 44px)/1.1 var(--script); color: var(--vinho); text-align: center; }
+  #envelope .toque { font: 600 13px var(--serifa); letter-spacing: .3em; text-transform: uppercase; color: var(--vinho); animation: respira 2s ease-in-out infinite; }
+  @keyframes respira { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+  .env { position: relative; width: min(340px, 84vw); aspect-ratio: 3 / 2; perspective: 1000px; max-width: 100%; animation: flutua 3.2s ease-in-out infinite; }
+  @keyframes flutua { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+  .env .fundo { position: absolute; inset: 0; border-radius: 6px; background: #f1d3d8; box-shadow: 0 26px 50px rgba(140,28,58,.25); }
   .env .carta {
-    position: absolute; left: 7%; right: 7%; top: 8%; height: 84%; border-radius: 4px; background: var(--noite-2);
-    border: 1px solid rgba(227,197,138,.5); display: grid; place-items: center; text-align: center;
-    font-family: var(--display); font-style: italic; color: var(--ouro-forte); font-size: clamp(26px, 8vw, 36px); line-height: 1.1;
-    transition: transform 1.1s cubic-bezier(.2,.8,.2,1) .45s; z-index: 1;
+    position: absolute; left: 6%; right: 6%; top: 6%; height: 150%; z-index: 1; border-radius: 4px; overflow: hidden;
+    background: #fff url("convite.jpg") center top / cover no-repeat; box-shadow: 0 6px 18px rgba(140,28,58,.2);
+    transform: translateY(0); transition: transform 1.2s cubic-bezier(.2,.8,.2,1) .5s;
+    clip-path: inset(0 0 66.6% 0);
   }
-  .env .carta small { display: block; font-family: var(--corpo); font-style: normal; font-size: 11px; letter-spacing: .3em; color: var(--rosa); margin-top: 6px; }
-  .env .bolso {
+  #envelope.aberto .carta { transform: translateY(-62%); clip-path: inset(0 0 0 0); transition: transform 1.2s cubic-bezier(.2,.8,.2,1) .5s, clip-path .01s linear .5s; }
+  .env .frente {
     position: absolute; inset: 0; z-index: 2; border-radius: 0 0 6px 6px;
     clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
-    background: linear-gradient(180deg, #ecd3a2, #e2c27f);
+    background: linear-gradient(180deg, #fbe9ec, #f3cfd6);
   }
   .env .aba {
-    position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 3; transform-origin: top center;
-    clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(180deg, #f1dcb2, #dcbb7c);
+    position: absolute; left: 0; right: 0; top: 0; height: 60%; z-index: 3; transform-origin: top center;
+    clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(180deg, #f7dce1, #e8b3be);
     transition: transform .7s cubic-bezier(.5,0,.3,1), z-index 0s linear .35s;
   }
   .env .selo {
-    position: absolute; left: 50%; top: 58%; z-index: 4; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #e88aa6, #b8456a 70%); box-shadow: 0 4px 12px rgba(0,0,0,.35), inset 0 -3px 6px rgba(0,0,0,.25);
-    display: grid; place-items: center; font-family: var(--display); font-style: italic; font-size: 30px; color: #ffe9f0;
-    transition: transform .45s ease, opacity .45s ease; animation: balanca 2.6s ease-in-out infinite;
+    position: absolute; left: 50%; top: 60%; z-index: 4; width: 124px; margin: -46px 0 0 -62px;
+    transition: transform .5s ease, opacity .5s ease; animation: balanca 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 4px 6px rgba(107,16,41,.35));
   }
-  @keyframes balanca { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.06); } }
-  #envelope .toque { font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--ouro); animation: respira 2s ease-in-out infinite; }
-  #envelope .para { font-family: var(--display); font-style: italic; color: var(--rosa); font-size: 20px; }
-  @keyframes respira { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
-  #envelope.aberto .selo { transform: scale(1.6); opacity: 0; animation: none; }
+  @keyframes balanca { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg) scale(1.05); } }
+  #envelope.aberto .env { animation: none; }
+  #envelope.aberto .selo { transform: translateY(-20px) scale(1.4); opacity: 0; animation: none; }
   #envelope.aberto .aba { transform: rotateX(180deg); z-index: 0; }
-  #envelope.aberto .carta { transform: translateY(-70%); }
   #envelope.aberto .toque, #envelope.aberto .para { opacity: 0; transition: opacity .3s; }
-  #pular { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--suave); font: 400 13px var(--corpo); text-decoration: underline; cursor: pointer; z-index: 21; }
-  #envelope.aberto + #pular { display: none; }
+  #pular { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 21; background: none; border: 0; color: var(--suave); font: italic 400 16px var(--serifa); text-decoration: underline; cursor: pointer; }
+  #envelope.aberto ~ #pular { display: none; }
 
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } #envelope { display: none; } body.fechado .revela > *, body.fechado main > section, body.fechado footer { opacity: 1; transform: none; } }
+  @media (max-width: 420px) {
+    body { font-size: 18px; }
+    .bloco { padding: 30px 18px 28px; }
+    .contagem b { font-size: 25px; }
+    .infos b { font-size: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    #envelope, #pular { display: none; }
+    body.fechado main > * { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body class="fechado">
-<canvas id="brilhos" aria-hidden="true"></canvas>
+<canvas id="ceu" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="laco" viewBox="0 0 120 70">
+      <path d="M60 34 C42 8 8 6 10 30 C12 50 40 44 60 34Z" fill="currentColor" opacity=".92"/>
+      <path d="M60 34 C78 8 112 6 110 30 C108 50 80 44 60 34Z" fill="currentColor" opacity=".92"/>
+      <path d="M56 36 L38 66 L48 62 L52 69 L60 40Z" fill="currentColor"/>
+      <path d="M64 36 L82 66 L72 62 L68 69 L60 40Z" fill="currentColor"/>
+      <ellipse cx="60" cy="35" rx="8" ry="9" fill="currentColor"/>
+      <path d="M22 26 C30 18 44 20 54 31" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none"/>
+      <path d="M98 26 C90 18 76 20 66 31" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
 <div id="envelope" role="button" tabindex="0" aria-label="Abrir o convite">
-  <div class="para">Um convite especial para você</div>
+  <div class="para">Tem um convite pra você</div>
   <div class="env">
-    <div class="corpo"></div>
-    <div class="carta">Luise<small>19 · 11</small></div>
-    <div class="bolso"></div>
+    <div class="fundo"></div>
+    <div class="carta"></div>
+    <div class="frente"></div>
     <div class="aba"></div>
-    <div class="selo">L</div>
+    <svg class="selo" viewBox="0 0 120 70" style="color:#8c1c3a"><use href="#laco"/></svg>
   </div>
   <div class="toque">Toque para abrir</div>
 </div>
 <button id="pular" type="button">Pular animação</button>
+
 <main>
-  <article class="cartao revela" aria-labelledby="titulo">
-    <div class="rotulo">Você está convidado</div>
-    <h1 id="titulo">Luise</h1>
-    <div class="sobrenome">Sawada</div>
-    <p class="frase">Vem celebrar mais um ano de vida da Luise com a gente. Sua presença é o melhor presente.</p>
+  <figure class="convite">
+    <img src="convite.jpg" width="900" height="1350" alt="Convite: Venha comemorar comigo os meus 19 anos — Luise. Será uma alegria ter você nesse dia tão especial! 19 de novembro, na casa da Luise. Conto com você!">
+  </figure>
 
-    <div class="data" aria-label="Quinta-feira, 19 de novembro, às 19 horas">
-      <div class="lado">Quinta</div>
-      <div class="dia">19<small>NOVEMBRO</small></div>
-      <div class="lado">às 19h</div>
+  <section class="bloco" aria-labelledby="t-quando">
+    <svg class="laco" viewBox="0 0 120 70" style="color:var(--vinho)" aria-hidden="true"><use href="#laco"/></svg>
+    <h2 id="t-quando">Quando e onde</h2>
+    <div class="infos">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        <b>19 de novembro</b>
+        <span>quinta-feira, às 19h</span>
+      </div>
+      <div class="linha"></div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <b>Na casa da Luise</b>
+        <span id="endereco">Passagem Emílio Martins, 92 — entre Chaco e Jabatiteua</span>
+        <a id="mapa" href="https://www.google.com/maps/search/?api=1&amp;query=Passagem+Emilio+Martins+92+Marco+Belem+PA" target="_blank" rel="noopener">Ver no mapa</a>
+      </div>
     </div>
-
-    <div class="local" id="local" hidden></div>
-
-    <div class="contagem" id="contagem" aria-live="off">
+    <div class="contagem" id="contagem">
       <div><b id="cd-d">0</b><span>dias</span></div>
       <div><b id="cd-h">00</b><span>horas</span></div>
       <div><b id="cd-m">00</b><span>min</span></div>
       <div><b id="cd-s">00</b><span>seg</span></div>
     </div>
     <div class="hoje" id="hoje" hidden>A festa já começou!</div>
-
     <a class="chamada pulsa" href="#confirmar">Confirmar presença</a>
-  </article>
+  </section>
 
-  <section class="cartao" id="confirmar" aria-labelledby="t-conf">
-    <h2 id="t-conf">Confirme sua presença</h2>
-    <p class="sub">Responda até 18/11 para a gente organizar tudo.</p>
+  <section class="bloco" id="confirmar" aria-labelledby="t-conf">
+    <svg class="laco" viewBox="0 0 120 70" style="color:var(--vinho)" aria-hidden="true"><use href="#laco"/></svg>
+    <h2 id="t-conf">Conto com você!</h2>
+    <p class="sub">Toque no seu nome para responder até 18/11.</p>
 
-    <form id="form" novalidate>
+    <div id="passo1">
+      <input class="busca" id="busca" type="search" placeholder="Procurar meu nome…" autocomplete="off" aria-label="Procurar meu nome">
+      <div class="nomes" id="lista-nomes" role="list"></div>
+      <button class="outro" type="button" id="btn-outro">Meu nome não está na lista</button>
+      <div id="campo-outro" hidden>
+        <input class="busca" id="nome-outro" maxlength="80" placeholder="Escreva seu nome" autocomplete="name" aria-label="Seu nome">
+      </div>
+    </div>
+
+    <form id="form" class="passo2" hidden novalidate>
+      <div class="ola" id="ola">Oi!</div>
       <div class="escolha" role="radiogroup" aria-label="Você vai?">
         <input type="radio" name="vai" id="vai-sim" value="sim" checked>
-        <label for="vai-sim"><b>Vou sim</b><span>Pode contar comigo</span></label>
+        <label for="vai-sim"><b>Vou sim!</b><span>pode contar comigo</span></label>
         <input type="radio" name="vai" id="vai-nao" value="nao">
-        <label for="vai-nao"><b>Não vou</b><span>Fica pra próxima</span></label>
+        <label for="vai-nao"><b>Não vou</b><span>fica pra próxima</span></label>
       </div>
-
-      <div class="campo">
-        <label for="nome">Seu nome</label>
-        <input id="nome" name="nome" autocomplete="name" maxlength="80" required placeholder="Nome e sobrenome">
-      </div>
-
-      <div class="campo" id="bloco-pessoas">
-        <label id="l-pessoas">Quantas pessoas, contando você</label>
+      <div class="pessoas" id="bloco-pessoas">
+        <span class="rotulo" id="l-pessoas">Quantas pessoas, contando você</span>
         <div class="contador" role="group" aria-labelledby="l-pessoas">
           <button type="button" id="menos" aria-label="Diminuir">−</button>
           <output id="pessoas" aria-live="polite">1</output>
           <button type="button" id="mais" aria-label="Aumentar">+</button>
         </div>
       </div>
-
-      <div class="campo">
-        <label for="telefone">WhatsApp <span style="text-transform:none;letter-spacing:0;color:var(--suave)">(opcional)</span></label>
-        <input id="telefone" name="telefone" type="tel" autocomplete="tel" maxlength="30" placeholder="(91) 90000-0000">
-      </div>
-
-      <div class="campo">
-        <label for="mensagem">Recado para a Luise <span style="text-transform:none;letter-spacing:0;color:var(--suave)">(opcional)</span></label>
-        <textarea id="mensagem" name="mensagem" maxlength="300" placeholder="Deixe um carinho…"></textarea>
-      </div>
-
+      <textarea id="mensagem" maxlength="300" placeholder="Deixe um recadinho para a Luise (opcional)" aria-label="Recado para a Luise"></textarea>
       <button class="chamada" type="submit" id="enviar">Enviar resposta</button>
       <div class="msg" id="msg" role="status"></div>
+      <button class="link" type="button" id="trocar">Não sou eu, escolher outro nome</button>
     </form>
 
     <div class="sucesso" id="sucesso" hidden>
-      <div class="selo">L</div>
-      <h3 id="suc-titulo">Presença confirmada!</h3>
-      <p id="suc-texto">Obrigado por responder. Te esperamos dia 19/11, às 19h.</p>
+      <svg class="coracao" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>
+      <h2 id="suc-titulo">Oba!</h2>
+      <p id="suc-texto">Te esperamos dia 19/11, às 19h.</p>
       <button class="link" type="button" id="alterar">Mudar minha resposta</button>
     </div>
   </section>
 
-  <section class="cartao" aria-labelledby="t-lista">
+  <section class="bloco" aria-labelledby="t-lista">
+    <svg class="laco" viewBox="0 0 120 70" style="color:var(--vinho)" aria-hidden="true"><use href="#laco"/></svg>
     <h2 id="t-lista">Quem já confirmou</h2>
-    <div class="lista-topo"><b id="total">–</b><span id="total-txt">pessoas confirmadas</span></div>
-    <ul class="nomes" id="nomes"></ul>
-    <p class="vazio" id="vazio" hidden>Ninguém confirmou ainda. Seja o primeiro!</p>
+    <div class="total" id="total">–</div>
+    <div class="rotulo" id="total-txt">pessoas confirmadas</div>
+    <ul class="confirmados" id="confirmados"></ul>
+    <p class="vazio" id="vazio" hidden>Ninguém confirmou ainda. Seja a primeira pessoa!</p>
   </section>
 
-  <footer>Com carinho · 19.11 · Luise Sawada</footer>
+  <footer>com carinho, Luise ♡</footer>
 </main>
 
 <script>
@@ -315,146 +331,156 @@
   tick(); setInterval(tick, 1000);
 
   fetch('/api/evento').then(r => r.json()).then(ev => {
-    if (!ev.local) return;
-    const el = $('local');
-    el.innerHTML = '<strong></strong>';
-    el.querySelector('strong').textContent = ev.local;
-    if (ev.mapa) {
-      const a = document.createElement('a');
-      a.href = ev.mapa; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Ver no mapa';
-      el.appendChild(a);
-    }
-    el.hidden = false;
+    if (ev.local) $('endereco').textContent = ev.local;
+    if (ev.mapa) $('mapa').href = ev.mapa;
   }).catch(() => {});
 
-  // contador de pessoas
-  let pessoas = 1;
+  // ---------- escolher o nome e responder ----------
+  let convidados = [], respondidos = new Set(), escolhido = '', pessoas = 1;
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+  function desenhaNomes() {
+    const q = norm($('busca').value);
+    const box = $('lista-nomes'); box.innerHTML = '';
+    convidados.filter(n => norm(n).includes(q)).forEach(n => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'nome'; b.textContent = n; b.setAttribute('role', 'listitem');
+      if (respondidos.has(norm(n))) b.classList.add('ok');
+      if (n === escolhido) b.classList.add('sel');
+      b.onclick = () => escolhe(n);
+      box.appendChild(b);
+    });
+  }
+  function escolhe(nome) {
+    escolhido = nome;
+    $('ola').textContent = 'Oi, ' + nome + '!';
+    $('passo1').hidden = true; $('form').hidden = false; $('sucesso').hidden = true;
+    $('msg').textContent = '';
+    $('form').scrollIntoView({ behavior: calmo ? 'auto' : 'smooth', block: 'center' });
+    try { localStorage.setItem('convite-luise-nome', nome); } catch {}
+  }
+  function voltaParaLista() { $('form').hidden = true; $('sucesso').hidden = true; $('passo1').hidden = false; desenhaNomes(); }
+
+  $('busca').addEventListener('input', desenhaNomes);
+  $('btn-outro').onclick = () => { $('campo-outro').hidden = false; $('nome-outro').focus(); };
+  $('nome-outro').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { const v = $('nome-outro').value.trim(); if (v.length >= 2) escolhe(v); }
+  });
+  $('nome-outro').addEventListener('change', () => { const v = $('nome-outro').value.trim(); if (v.length >= 2) escolhe(v); });
+  $('trocar').onclick = voltaParaLista;
+  $('alterar').onclick = () => escolhe(escolhido);
+
   const setP = (n) => { pessoas = Math.min(10, Math.max(1, n)); $('pessoas').textContent = pessoas; };
   $('menos').onclick = () => setP(pessoas - 1);
   $('mais').onclick = () => setP(pessoas + 1);
-  document.querySelectorAll('input[name=vai]').forEach(r => r.addEventListener('change', () => {
-    $('bloco-pessoas').hidden = $('vai-nao').checked;
-  }));
+  document.querySelectorAll('input[name=vai]').forEach(r => r.addEventListener('change', () => { $('bloco-pessoas').hidden = $('vai-nao').checked; }));
 
   async function carregaLista() {
     try {
-      const r = await fetch('/api/confirmados');
-      const d = await r.json();
+      const d = await (await fetch('/api/confirmados')).json();
       $('total').textContent = d.total;
       $('total-txt').textContent = d.total === 1 ? 'pessoa confirmada' : 'pessoas confirmadas';
-      const ul = $('nomes'); ul.innerHTML = '';
+      const ul = $('confirmados'); ul.innerHTML = '';
       d.nomes.forEach(p => {
-        const li = document.createElement('li');
-        li.textContent = p.nome;
+        const li = document.createElement('li'); li.textContent = p.nome;
         if (p.pessoas > 1) { const s = document.createElement('small'); s.textContent = '+' + (p.pessoas - 1); li.appendChild(s); }
         ul.appendChild(li);
       });
       $('vazio').hidden = d.nomes.length > 0;
+      respondidos = new Set(d.nomes.map(p => norm(p.nome)));
+      desenhaNomes();
     } catch { $('total').textContent = '–'; }
   }
-  carregaLista();
+
+  fetch('/api/convidados').then(r => r.json()).then(l => { convidados = l; desenhaNomes(); carregaLista(); }).catch(carregaLista);
 
   $('form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const msg = $('msg'); msg.className = 'msg'; msg.textContent = '';
-    const nome = $('nome').value.trim();
-    if (nome.length < 2) { msg.className = 'msg erro'; msg.textContent = 'Escreva seu nome para confirmar.'; $('nome').focus(); return; }
     const vai = $('vai-sim').checked;
-    const btn = $('enviar'); btn.disabled = true; btn.textContent = 'Enviando…';
+    const btn = $('enviar'); btn.disabled = true; btn.textContent = 'Enviando…'; $('msg').textContent = '';
     try {
       const r = await fetch('/api/confirmar', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, vai, pessoas, telefone: $('telefone').value, mensagem: $('mensagem').value })
+        body: JSON.stringify({ nome: escolhido, vai, pessoas, mensagem: $('mensagem').value })
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.erro || 'Erro ao enviar.');
-      $('suc-titulo').textContent = vai ? 'Presença confirmada!' : 'Resposta registrada';
-      $('suc-texto').textContent = vai
-        ? `Obrigado, ${nome.split(' ')[0]}! Te esperamos dia 19/11, às 19h.`
-        : `Que pena, ${nome.split(' ')[0]}. Obrigado por avisar, vamos sentir sua falta.`;
+      $('suc-titulo').textContent = vai ? 'Oba, ' + escolhido + '!' : 'Que pena, ' + escolhido;
+      $('suc-texto').textContent = vai ? 'Sua presença está confirmada. Te esperamos dia 19/11, às 19h, na casa da Luise.' : 'Obrigada por avisar. Vamos sentir sua falta!';
       $('form').hidden = true; $('sucesso').hidden = false;
-      try { localStorage.setItem('convite-luise-nome', nome); } catch {}
-      if (vai) festa();
+      if (vai) { chuva(160); setTimeout(() => chuva(90), 350); }
       carregaLista();
     } catch (err) {
-      msg.className = 'msg erro'; msg.textContent = err.message || 'Não foi possível enviar. Tente de novo.';
+      $('msg').textContent = err.message || 'Não foi possível enviar. Tente de novo.';
     } finally { btn.disabled = false; btn.textContent = 'Enviar resposta'; }
   });
-  $('alterar').onclick = () => { $('sucesso').hidden = true; $('form').hidden = false; $('nome').focus(); };
-  try { const n = localStorage.getItem('convite-luise-nome'); if (n) $('nome').value = n; } catch {}
 
-  // brilhos de fundo + chuva de confete ao confirmar
-  const cv = $('brilhos'), ctx = cv.getContext('2d');
+  // ---------- pétalas, laços e corações ----------
+  const cv = $('ceu'), ctx = cv.getContext('2d');
   const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W, H, pontos = [], confete = [];
-  function tam() { W = cv.width = innerWidth * devicePixelRatio; H = cv.height = innerHeight * devicePixelRatio; cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px'; }
+  let W, H, D = devicePixelRatio || 1, festa = [], petalas = [];
+  function tam() { W = cv.width = innerWidth * D; H = cv.height = innerHeight * D; cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px'; }
   tam(); addEventListener('resize', tam);
-  for (let i = 0; i < 60; i++) pontos.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + .3, f: Math.random() * 6.28 });
-  const cores = ['#e3c58a', '#f2bfcf', '#f1d9a8', '#ffffff'];
-  function festa() {
+  const CORES = ['#8c1c3a', '#e9a8b5', '#f6d5db', '#c94f6d', '#ffffff'];
+
+  function petala(inicio) {
+    return { x: Math.random(), y: inicio ? Math.random() : -0.05, v: .0005 + Math.random() * .0007, a: Math.random() * 6.28,
+      va: (Math.random() - .5) * .02, s: 5 + Math.random() * 6, o: Math.random() * 6.28, c: Math.random() < .25 ? '#c94f6d' : '#eeb3bf' };
+  }
+  if (!calmo) for (let i = 0; i < 16; i++) petalas.push(petala(true));
+
+  function chuva(n) {
     if (calmo) return;
-    for (let i = 0; i < 140; i++) confete.push({
-      x: W / 2 + (Math.random() - .5) * W * .4, y: H * .35, vx: (Math.random() - .5) * 14 * devicePixelRatio,
-      vy: (-Math.random() * 14 - 4) * devicePixelRatio, a: Math.random() * 6.28, va: (Math.random() - .5) * .3,
-      c: cores[i % 4], w: (4 + Math.random() * 5) * devicePixelRatio, vida: 0
-    });
+    for (let i = 0; i < n; i++) {
+      const tipo = Math.random() < .15 ? 'coracao' : 'papel';
+      festa.push({ x: W / 2 + (Math.random() - .5) * W * .3, y: H * .45, vx: (Math.random() - .5) * 16 * D, vy: (-Math.random() * 15 - 5) * D,
+        a: Math.random() * 6.28, va: (Math.random() - .5) * .3, c: CORES[i % CORES.length], w: (6 + Math.random() * 6) * D, t: tipo, vida: 0 });
+    }
+  }
+  function coracao(s) {
+    ctx.beginPath(); ctx.moveTo(0, s * .3);
+    ctx.bezierCurveTo(-s, -s * .4, -s * .4, -s, 0, -s * .4);
+    ctx.bezierCurveTo(s * .4, -s, s, -s * .4, 0, s * .3); ctx.fill();
   }
   function quadro(t) {
     ctx.clearRect(0, 0, W, H);
-    for (const p of pontos) {
-      const al = calmo ? .5 : .25 + .35 * Math.sin(t / 900 + p.f);
-      ctx.fillStyle = `rgba(241,217,168,${al})`;
-      ctx.beginPath(); ctx.arc(p.x * W, p.y * H, p.r * devicePixelRatio, 0, 6.28); ctx.fill();
+    for (let i = 0; i < petalas.length; i++) {
+      const p = petalas[i]; p.y += p.v; p.a += p.va;
+      if (p.y > 1.05) { petalas[i] = petala(false); continue; }
+      ctx.save(); ctx.translate((p.x + Math.sin(t / 2200 + p.o) * .035) * W, p.y * H); ctx.rotate(p.a);
+      ctx.globalAlpha = .5; ctx.fillStyle = p.c; ctx.beginPath();
+      ctx.ellipse(0, 0, p.s * D, p.s * .55 * D, 0, 0, 6.28); ctx.fill(); ctx.restore();
     }
-    confete = confete.filter(c => c.vida < 260 && c.y < H + 40);
-    for (const c of confete) {
-      c.vy += .35 * devicePixelRatio; c.vx *= .99; c.x += c.vx; c.y += c.vy; c.a += c.va; c.vida++;
-      ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.a); ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w / 4, c.w, c.w / 2); ctx.restore();
+    festa = festa.filter(c => c.vida < 280 && c.y < H + 40);
+    for (const c of festa) {
+      c.vy += .32 * D; c.vx *= .99; c.x += c.vx; c.y += c.vy; c.a += c.va; c.vida++;
+      ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.t === 'coracao' ? c.a * .2 : c.a); ctx.fillStyle = c.c;
+      if (c.t === 'coracao') coracao(c.w * .9); else ctx.fillRect(-c.w / 2, -c.w / 4, c.w, c.w / 2);
+      ctx.restore();
     }
     requestAnimationFrame(quadro);
   }
   requestAnimationFrame(quadro);
 
-  // abertura do envelope: aba vira, carta sobe, confete e o convite aparece em cascata
+  // ---------- abertura do envelope ----------
   const env = $('envelope');
-  function cascata() {
-    document.querySelectorAll('.revela > *').forEach((el, i) => { el.style.transitionDelay = (i * 0.12) + 's'; });
+  let aberto = false;
+  function revela() {
+    document.querySelectorAll('main > *').forEach((el, i) => { el.style.transitionDelay = (i * 0.15) + 's'; });
     document.body.classList.remove('fechado');
   }
-  let aberto = false;
   function abrir(rapido) {
     if (aberto) return; aberto = true;
     env.classList.add('aberto');
-    if (rapido) { env.style.transition = 'none'; cascata(); return; }
-    setTimeout(festa, 900);
-    setTimeout(festa, 1300);
-    setTimeout(cascata, 1500);
+    if (rapido) { env.style.transition = 'none'; revela(); return; }
+    setTimeout(() => chuva(150), 1100);
+    setTimeout(() => chuva(80), 1500);
+    setTimeout(revela, 1900);
   }
   env.addEventListener('click', () => abrir(false));
   env.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(false); } });
   $('pular').onclick = () => abrir(true);
-  if (calmo) abrir(true);
-  // quem chega direto no link #confirmar não precisa ver o envelope
-  if (location.hash === '#confirmar') abrir(true);
-
-  // pétalas caindo devagar o tempo todo
-  if (!calmo) {
-    const petalas = Array.from({ length: 14 }, () => novaPetala(true));
-    function novaPetala(inicio) {
-      return { x: Math.random(), y: inicio ? Math.random() : -0.05, v: .0006 + Math.random() * .0008, a: Math.random() * 6.28, va: (Math.random() - .5) * .02, s: 5 + Math.random() * 6, o: Math.random() * 6.28 };
-    }
-    (function petalasLoop(t) {
-      for (let i = 0; i < petalas.length; i++) {
-        const p = petalas[i];
-        p.y += p.v; p.a += p.va; const x = (p.x + Math.sin(t / 2000 + p.o) * .03) * W;
-        if (p.y > 1.05) { petalas[i] = novaPetala(false); continue; }
-        ctx.save(); ctx.translate(x, p.y * H); ctx.rotate(p.a); ctx.globalAlpha = .55;
-        ctx.fillStyle = '#f2bfcf'; ctx.beginPath();
-        ctx.ellipse(0, 0, p.s * devicePixelRatio, p.s * .55 * devicePixelRatio, 0, 0, 6.28); ctx.fill(); ctx.restore();
-      }
-      requestAnimationFrame(petalasLoop);
-    })(0);
-  }
+  if (calmo || location.hash === '#confirmar') abrir(true);
 </script>
 </body>
 </html>
