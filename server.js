@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { Pool } = require('pg');
+const { CONVIDADOS, encontraConvidado } = require('./convidados');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ async function init() {
       mensagem TEXT,
       criado_em TIMESTAMPTZ NOT NULL DEFAULT now()
     )`);
+  await pool.query('ALTER TABLE confirmacoes ADD COLUMN IF NOT EXISTS convidado TEXT');
 }
 
 app.use(express.json({ limit: '20kb' }));
@@ -29,29 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const limpa = (s, max) => String(s ?? '').trim().slice(0, max);
 
-const CONVIDADOS = [
-  'Thais', 'Marcelo', 'Renato', 'Sachie', 'Akemi', 'Henrique', 'Maria Clara', 'Maria Eduarda', 'Gabi', 'Laura',
-  'Mateus', 'Quezia', 'Mari', 'Enzo', 'Ricardinho', 'Andee', 'Lissa', 'Gio', 'Felipe', 'Felipe Preto',
-  'Sofia', 'Poli', 'Ricardo', 'Lumi', 'Bemicio', 'Maria Helena', 'Eliel', 'Paula', 'Vivian', 'Klautau',
-].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-
-app.get('/api/convidados', (req, res) => res.json(CONVIDADOS));
 
 app.get('/api/evento', (req, res) => {
   res.json({ local: process.env.EVENT_LOCAL || 'Passagem Emílio Martins, 92 — entre Chaco e Jabatiteua', mapa: process.env.EVENT_MAPA || 'https://www.google.com/maps/search/?api=1&query=Passagem+Emilio+Martins+92+Marco+Belem+PA' });
-});
-
-// lista pública: só nome e quantidade de quem confirmou
-app.get('/api/confirmados', async (req, res) => {
-  try {
-    const { rows } = await pool.query(
-      'SELECT nome, pessoas FROM confirmacoes WHERE vai = true ORDER BY criado_em ASC');
-    const total = rows.reduce((s, r) => s + r.pessoas, 0);
-    res.json({ total, nomes: rows });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ erro: 'Não foi possível carregar a lista agora.' });
-  }
 });
 
 app.post('/api/confirmar', async (req, res) => {
@@ -64,18 +46,21 @@ app.post('/api/confirmar', async (req, res) => {
   if (pessoas > 10) pessoas = 10;
   if (!vai) pessoas = 0;
   if (nome.length < 2) return res.status(400).json({ erro: 'Escreva seu nome para confirmar.' });
+  const convidado = encontraConvidado(nome);
 
   try {
-    // mesmo nome responde de novo: atualiza em vez de duplicar
-    const existe = await pool.query('SELECT id FROM confirmacoes WHERE lower(nome) = lower($1)', [nome]);
+    // a mesma pessoa responde de novo: atualiza em vez de duplicar
+    const existe = convidado
+      ? await pool.query('SELECT id FROM confirmacoes WHERE convidado = $1', [convidado])
+      : await pool.query('SELECT id FROM confirmacoes WHERE lower(nome) = lower($1)', [nome]);
     if (existe.rows.length) {
       await pool.query(
-        'UPDATE confirmacoes SET telefone=$2, vai=$3, pessoas=$4, mensagem=$5, criado_em=now() WHERE id=$1',
-        [existe.rows[0].id, telefone, vai, pessoas, mensagem]);
+        'UPDATE confirmacoes SET nome=$2, telefone=$3, vai=$4, pessoas=$5, mensagem=$6, convidado=$7, criado_em=now() WHERE id=$1',
+        [existe.rows[0].id, nome, telefone, vai, pessoas, mensagem, convidado]);
     } else {
       await pool.query(
-        'INSERT INTO confirmacoes (nome, telefone, vai, pessoas, mensagem) VALUES ($1,$2,$3,$4,$5)',
-        [nome, telefone, vai, pessoas, mensagem]);
+        'INSERT INTO confirmacoes (nome, telefone, vai, pessoas, mensagem, convidado) VALUES ($1,$2,$3,$4,$5,$6)',
+        [nome, telefone, vai, pessoas, mensagem, convidado]);
     }
     res.json({ ok: true, atualizado: existe.rows.length > 0 });
   } catch (e) {
@@ -91,12 +76,24 @@ function exigeAdmin(req, res, next) {
 
 app.get('/api/admin/lista', exigeAdmin, async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM confirmacoes ORDER BY criado_em DESC');
-  const responderam = new Set(rows.map(r => r.nome.toLowerCase()));
-  res.json({ respostas: rows, pendentes: CONVIDADOS.filter(n => !responderam.has(n.toLowerCase())) });
+  // cada convidado da lista com a resposta que foi reconhecida para ele
+  const lista = CONVIDADOS.map(c => {
+    const r = rows.find(x => x.convidado === c);
+    return { convidado: c, status: !r ? 'pendente' : r.vai ? 'vai' : 'nao', pessoas: r && r.vai ? r.pessoas : 0, digitou: r ? r.nome : '' };
+  });
+  res.json({ lista, respostas: rows, foraDaLista: rows.filter(r => !r.convidado) });
 });
 
 app.delete('/api/admin/:id', exigeAdmin, async (req, res) => {
   await pool.query('DELETE FROM confirmacoes WHERE id = $1', [parseInt(req.params.id, 10)]);
+  res.json({ ok: true });
+});
+
+// o admin liga uma resposta não reconhecida a um nome da lista (ou desfaz com convidado vazio)
+app.patch('/api/admin/:id', exigeAdmin, async (req, res) => {
+  const convidado = CONVIDADOS.includes(req.body.convidado) ? req.body.convidado : null;
+  if (convidado) await pool.query('UPDATE confirmacoes SET convidado = NULL WHERE convidado = $1', [convidado]);
+  await pool.query('UPDATE confirmacoes SET convidado = $2 WHERE id = $1', [parseInt(req.params.id, 10), convidado]);
   res.json({ ok: true });
 });
 

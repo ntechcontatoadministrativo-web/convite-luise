@@ -90,19 +90,10 @@
   @keyframes pulsa { 0%, 100% { box-shadow: 0 8px 20px rgba(140,28,58,.25), 0 0 0 0 rgba(140,28,58,.35); } 50% { box-shadow: 0 8px 20px rgba(140,28,58,.25), 0 0 0 12px rgba(140,28,58,0); } }
   :focus-visible { outline: 2px solid var(--vinho); outline-offset: 3px; }
 
-  /* escolher o nome */
-  .busca { width: 100%; background: #fff; border: 1px solid var(--rosa); border-radius: 999px; padding: 12px 18px; font: 400 18px var(--serifa); color: var(--tinta); margin-bottom: 16px; }
-  .nomes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-  .nome {
+  .busca { width: 100%; text-align: center; background: #fff; border: 1px solid var(--rosa); border-radius: 999px; padding: 12px 18px; font: 400 18px var(--serifa); color: var(--tinta); }
     background: #fff; border: 1px solid var(--rosa); color: var(--tinta); border-radius: 999px; padding: 7px 15px;
     font: 500 17px var(--serifa); cursor: pointer; transition: background .2s, color .2s, transform .15s;
   }
-  .nome:hover { transform: translateY(-1px); border-color: var(--vinho); }
-  .nome.sel { background: var(--vinho); border-color: var(--vinho); color: #fff3f5; }
-  .nome.ok::after { content: " ✓"; color: var(--vinho); }
-  .nome.sel.ok::after { color: #fff3f5; }
-  .outro { background: none; border: 0; color: var(--suave); font: italic 400 16px var(--serifa); text-decoration: underline; cursor: pointer; margin-top: 14px; }
-  #campo-outro { margin-top: 12px; }
 
   .passo2 { margin-top: 26px; display: grid; gap: 18px; justify-items: center; }
   .ola { font: 400 38px/1.1 var(--script); color: var(--vinho); }
@@ -126,11 +117,6 @@
   .sucesso p { margin: 0; color: var(--suave); max-width: 32ch; font-style: italic; }
   .link { background: none; border: 0; color: var(--vinho); font: italic 400 16px var(--serifa); text-decoration: underline; cursor: pointer; padding: 6px; }
 
-  .total { font: 600 46px/1 var(--serifa); color: var(--vinho); font-variant-numeric: lining-nums; }
-  .confirmados { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-  .confirmados li { background: var(--rosa-claro); color: var(--vinho-escuro); border-radius: 999px; padding: 5px 14px; font: 500 17px var(--serifa); }
-  .confirmados li small { margin-left: 4px; color: var(--vinho); }
-  .vazio { color: var(--suave); font-style: italic; margin: 10px 0 0; }
 
   footer { text-align: center; font: 400 32px var(--script); color: var(--vinho); }
 
@@ -261,19 +247,10 @@
   <section class="bloco" id="confirmar" aria-labelledby="t-conf">
     <svg class="laco" viewBox="0 0 120 70" style="color:var(--vinho)" aria-hidden="true"><use href="#laco"/></svg>
     <h2 id="t-conf">Conto com você!</h2>
-    <p class="sub">Toque no seu nome para responder até 18/11.</p>
+    <p class="sub">Escreva seu nome e responda até 18/11.</p>
 
-    <div id="passo1">
-      <input class="busca" id="busca" type="search" placeholder="Procurar meu nome…" autocomplete="off" aria-label="Procurar meu nome">
-      <div class="nomes" id="lista-nomes" role="list"></div>
-      <button class="outro" type="button" id="btn-outro">Meu nome não está na lista</button>
-      <div id="campo-outro" hidden>
-        <input class="busca" id="nome-outro" maxlength="80" placeholder="Escreva seu nome" autocomplete="name" aria-label="Seu nome">
-      </div>
-    </div>
-
-    <form id="form" class="passo2" hidden novalidate>
-      <div class="ola" id="ola">Oi!</div>
+    <form id="form" class="passo2" novalidate>
+      <input class="busca" id="nome" maxlength="80" placeholder="Seu nome" autocomplete="name" aria-label="Seu nome" required>
       <div class="escolha" role="radiogroup" aria-label="Você vai?">
         <input type="radio" name="vai" id="vai-sim" value="sim" checked>
         <label for="vai-sim"><b>Vou sim!</b><span>pode contar comigo</span></label>
@@ -291,7 +268,6 @@
       <textarea id="mensagem" maxlength="300" placeholder="Deixe um recadinho para a Luise (opcional)" aria-label="Recado para a Luise"></textarea>
       <button class="chamada" type="submit" id="enviar">Enviar resposta</button>
       <div class="msg" id="msg" role="status"></div>
-      <button class="link" type="button" id="trocar">Não sou eu, escolher outro nome</button>
     </form>
 
     <div class="sucesso" id="sucesso" hidden>
@@ -300,15 +276,6 @@
       <p id="suc-texto">Te esperamos dia 19/11, às 19h.</p>
       <button class="link" type="button" id="alterar">Mudar minha resposta</button>
     </div>
-  </section>
-
-  <section class="bloco" aria-labelledby="t-lista">
-    <svg class="laco" viewBox="0 0 120 70" style="color:var(--vinho)" aria-hidden="true"><use href="#laco"/></svg>
-    <h2 id="t-lista">Quem já confirmou</h2>
-    <div class="total" id="total">–</div>
-    <div class="rotulo" id="total-txt">pessoas confirmadas</div>
-    <ul class="confirmados" id="confirmados"></ul>
-    <p class="vazio" id="vazio" hidden>Ninguém confirmou ainda. Seja a primeira pessoa!</p>
   </section>
 
   <footer>com carinho, Luise ♡</footer>
@@ -335,81 +302,36 @@
     if (ev.mapa) $('mapa').href = ev.mapa;
   }).catch(() => {});
 
-  // ---------- escolher o nome e responder ----------
-  let convidados = [], respondidos = new Set(), escolhido = '', pessoas = 1;
-  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-
-  function desenhaNomes() {
-    const q = norm($('busca').value);
-    const box = $('lista-nomes'); box.innerHTML = '';
-    convidados.filter(n => norm(n).includes(q)).forEach(n => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'nome'; b.textContent = n; b.setAttribute('role', 'listitem');
-      if (respondidos.has(norm(n))) b.classList.add('ok');
-      if (n === escolhido) b.classList.add('sel');
-      b.onclick = () => escolhe(n);
-      box.appendChild(b);
-    });
-  }
-  function escolhe(nome) {
-    escolhido = nome;
-    $('ola').textContent = 'Oi, ' + nome + '!';
-    $('passo1').hidden = true; $('form').hidden = false; $('sucesso').hidden = true;
-    $('msg').textContent = '';
-    $('form').scrollIntoView({ behavior: calmo ? 'auto' : 'smooth', block: 'center' });
-    try { localStorage.setItem('convite-luise-nome', nome); } catch {}
-  }
-  function voltaParaLista() { $('form').hidden = true; $('sucesso').hidden = true; $('passo1').hidden = false; desenhaNomes(); }
-
-  $('busca').addEventListener('input', desenhaNomes);
-  $('btn-outro').onclick = () => { $('campo-outro').hidden = false; $('nome-outro').focus(); };
-  $('nome-outro').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { const v = $('nome-outro').value.trim(); if (v.length >= 2) escolhe(v); }
-  });
-  $('nome-outro').addEventListener('change', () => { const v = $('nome-outro').value.trim(); if (v.length >= 2) escolhe(v); });
-  $('trocar').onclick = voltaParaLista;
-  $('alterar').onclick = () => escolhe(escolhido);
+  // ---------- responder ----------
+  let pessoas = 1;
+  const primeiro = (n) => n.trim().split(/s+/)[0];
+  try { const n = localStorage.getItem('convite-luise-nome'); if (n) $('nome').value = n; } catch {}
 
   const setP = (n) => { pessoas = Math.min(10, Math.max(1, n)); $('pessoas').textContent = pessoas; };
   $('menos').onclick = () => setP(pessoas - 1);
   $('mais').onclick = () => setP(pessoas + 1);
   document.querySelectorAll('input[name=vai]').forEach(r => r.addEventListener('change', () => { $('bloco-pessoas').hidden = $('vai-nao').checked; }));
-
-  async function carregaLista() {
-    try {
-      const d = await (await fetch('/api/confirmados')).json();
-      $('total').textContent = d.total;
-      $('total-txt').textContent = d.total === 1 ? 'pessoa confirmada' : 'pessoas confirmadas';
-      const ul = $('confirmados'); ul.innerHTML = '';
-      d.nomes.forEach(p => {
-        const li = document.createElement('li'); li.textContent = p.nome;
-        if (p.pessoas > 1) { const s = document.createElement('small'); s.textContent = '+' + (p.pessoas - 1); li.appendChild(s); }
-        ul.appendChild(li);
-      });
-      $('vazio').hidden = d.nomes.length > 0;
-      respondidos = new Set(d.nomes.map(p => norm(p.nome)));
-      desenhaNomes();
-    } catch { $('total').textContent = '–'; }
-  }
-
-  fetch('/api/convidados').then(r => r.json()).then(l => { convidados = l; desenhaNomes(); carregaLista(); }).catch(carregaLista);
+  $('alterar').onclick = () => { $('sucesso').hidden = true; $('form').hidden = false; $('nome').focus(); };
 
   $('form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const nome = $('nome').value.trim();
+    if (nome.length < 2) { $('msg').textContent = 'Escreva seu nome para responder.'; $('nome').focus(); return; }
     const vai = $('vai-sim').checked;
     const btn = $('enviar'); btn.disabled = true; btn.textContent = 'Enviando…'; $('msg').textContent = '';
     try {
       const r = await fetch('/api/confirmar', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome: escolhido, vai, pessoas, mensagem: $('mensagem').value })
+        body: JSON.stringify({ nome, vai, pessoas, mensagem: $('mensagem').value })
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.erro || 'Erro ao enviar.');
-      $('suc-titulo').textContent = vai ? 'Oba, ' + escolhido + '!' : 'Que pena, ' + escolhido;
+      try { localStorage.setItem('convite-luise-nome', nome); } catch {}
+      $('suc-titulo').textContent = vai ? 'Oba, ' + primeiro(nome) + '!' : 'Que pena, ' + primeiro(nome);
       $('suc-texto').textContent = vai ? 'Sua presença está confirmada. Te esperamos dia 19/11, às 19h, na casa da Luise.' : 'Obrigada por avisar. Vamos sentir sua falta!';
       $('form').hidden = true; $('sucesso').hidden = false;
+      $('sucesso').scrollIntoView({ behavior: calmo ? 'auto' : 'smooth', block: 'center' });
       if (vai) { chuva(160); setTimeout(() => chuva(90), 350); }
-      carregaLista();
     } catch (err) {
       $('msg').textContent = err.message || 'Não foi possível enviar. Tente de novo.';
     } finally { btn.disabled = false; btn.textContent = 'Enviar resposta'; }

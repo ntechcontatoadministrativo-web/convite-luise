@@ -25,8 +25,14 @@
   td.n { font-variant-numeric: lining-nums tabular-nums; }
   .pill { font-size:14px; padding:1px 10px; border-radius:999px; white-space: nowrap; font-weight: 600; }
   .sim { background: #e3f1e4; color:#2f6b3a; } .nao { background: var(--rosa-claro); color: var(--vinho); }
-  .pend { display:flex; flex-wrap:wrap; gap:8px; }
-  .pend span { border:1px dashed var(--rosa); border-radius:999px; padding:3px 12px; }
+  .grade { display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:8px; }
+  .conv { display:flex; align-items:center; gap:10px; border-radius:6px; padding:8px 12px; border:1px solid var(--rosa-claro); background:#fff; min-width:0; }
+  .conv i { font-style:normal; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; font-weight:700; flex:none; }
+  .conv.vai i { background:#e3f1e4; color:#2f6b3a; } .conv.nao i { background:var(--rosa-claro); color:var(--vinho); } .conv.pendente i { border:1px dashed var(--rosa); color:var(--suave); }
+  .conv.pendente { color: var(--suave); }
+  .conv b { font-weight:600; display:block; } .conv small { display:block; color:var(--suave); font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .conv div { min-width:0; }
+  select { background:#fff; border:1px solid var(--rosa); color:var(--tinta); border-radius:999px; padding:4px 10px; font: inherit; }
   button { background:#fff; border:1px solid var(--rosa); color:var(--tinta); border-radius:999px; padding:5px 14px; cursor:pointer; font: inherit; }
   button.conf { border-color: var(--vinho); color: #fff; background: var(--vinho); }
   .acoes { display:flex; gap:8px; flex-wrap: wrap; margin: 0; }
@@ -56,13 +62,18 @@
     </div>
     <p class="acoes"><button type="button" id="copiar">Copiar lista de quem vai</button><button type="button" id="copiar-pend">Copiar quem falta responder</button><button type="button" id="atualizar">Atualizar</button></p>
     <div class="caixa">
-      <h2>Ainda não responderam</h2>
-      <div class="pend" id="pendentes"></div>
+      <h2>Convidados</h2>
+      <div class="grade" id="grade"></div>
+    </div>
+    <div class="caixa" id="caixa-fora" hidden>
+      <h2>Não reconhecidos</h2>
+      <p class="vazio" style="margin-bottom:10px">Respostas com nomes que não bati com a lista. Escolha quem é para descontar.</p>
+      <div class="tabela"><table><tbody id="fora"></tbody></table></div>
     </div>
     <div class="caixa">
       <h2>Respostas</h2>
       <div class="tabela"><table>
-        <thead><tr><th>Nome</th><th>Resposta</th><th>Pessoas</th><th>Recado</th><th>Quando</th><th></th></tr></thead>
+        <thead><tr><th>Escreveu</th><th>Na lista</th><th>Resposta</th><th>Pessoas</th><th>Recado</th><th>Quando</th><th></th></tr></thead>
         <tbody id="linhas"></tbody>
       </table></div>
       <p class="vazio" id="sem-resp" hidden>Nenhuma resposta ainda.</p>
@@ -72,7 +83,7 @@
 <script>
   const $ = (id) => document.getElementById(id);
   let chave = new URLSearchParams(location.search).get('chave') || (() => { try { return sessionStorage.getItem('chave') || ''; } catch { return ''; } })();
-  let dados = { respostas: [], pendentes: [] };
+  let dados = { lista: [], respostas: [], foraDaLista: [] };
 
   async function carrega() {
     const r = await fetch('/api/admin/lista?chave=' + encodeURIComponent(chave));
@@ -84,16 +95,40 @@
     $('r-pessoas').textContent = sim.reduce((s, d) => s + d.pessoas, 0);
     $('r-sim').textContent = sim.length;
     $('r-nao').textContent = dados.respostas.length - sim.length;
-    $('r-pend').textContent = dados.pendentes.length;
-    const pend = $('pendentes'); pend.innerHTML = '';
-    dados.pendentes.forEach(n => { const s = document.createElement('span'); s.textContent = n; pend.appendChild(s); });
-    if (!dados.pendentes.length) pend.innerHTML = '<p class="vazio">Todo mundo respondeu!</p>';
+    $('r-pend').textContent = dados.lista.filter(c => c.status === 'pendente').length;
+    const grade = $('grade'); grade.innerHTML = '';
+    for (const c of dados.lista) {
+      const el = document.createElement('div'); el.className = 'conv ' + c.status;
+      const i = document.createElement('i'); i.textContent = c.status === 'vai' ? '✓' : c.status === 'nao' ? '✕' : '?';
+      const tx = document.createElement('div');
+      const b = document.createElement('b'); b.textContent = c.convidado + (c.pessoas > 1 ? ' (+' + (c.pessoas - 1) + ')' : '');
+      const sm = document.createElement('small');
+      sm.textContent = c.status === 'pendente' ? 'sem resposta' : (c.status === 'vai' ? 'vai' : 'não vai') + ' · escreveu "' + c.digitou + '"';
+      tx.append(b, sm); el.append(i, tx); grade.appendChild(el);
+    }
+    const fora = $('fora'); fora.innerHTML = '';
+    $('caixa-fora').hidden = !dados.foraDaLista.length;
+    for (const r of dados.foraDaLista) {
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td'); td1.textContent = r.nome + ' — ' + (r.vai ? 'vai' + (r.pessoas > 1 ? ' (+' + (r.pessoas - 1) + ')' : '') : 'não vai');
+      const td2 = document.createElement('td');
+      const sel = document.createElement('select');
+      sel.innerHTML = '<option value="">É quem da lista?</option>';
+      dados.lista.forEach(c => { const o = document.createElement('option'); o.value = c.convidado; o.textContent = c.convidado + (c.status !== 'pendente' ? ' (já respondeu)' : ''); sel.appendChild(o); });
+      sel.onchange = async () => {
+        if (!sel.value) return;
+        await fetch('/api/admin/' + r.id + '?chave=' + encodeURIComponent(chave), { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ convidado: sel.value }) });
+        carrega();
+      };
+      td2.appendChild(sel); tr.append(td1, td2); fora.appendChild(tr);
+    }
     const tb = $('linhas'); tb.innerHTML = '';
     $('sem-resp').hidden = dados.respostas.length > 0;
     for (const d of dados.respostas) {
       const tr = document.createElement('tr');
       const cel = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt ?? ''; if (cls) td.className = cls; tr.appendChild(td); return td; };
       cel(d.nome);
+      cel(d.convidado || '—');
       const p = document.createElement('span'); p.className = 'pill ' + (d.vai ? 'sim' : 'nao'); p.textContent = d.vai ? 'Vai' : 'Não vai'; cel('').appendChild(p);
       cel(d.vai ? d.pessoas : '–', 'n');
       cel(d.mensagem);
@@ -116,7 +151,7 @@
   $('atualizar').onclick = carrega;
   $('copiar').onclick = () => copia($('copiar'),
     dados.respostas.filter(d => d.vai).map((d, i) => `${i + 1}. ${d.nome}${d.pessoas > 1 ? ' (+' + (d.pessoas - 1) + ')' : ''}`).join('\n'), 'Copiar lista de quem vai');
-  $('copiar-pend').onclick = () => copia($('copiar-pend'), dados.pendentes.join('\n'), 'Copiar quem falta responder');
+  $('copiar-pend').onclick = () => copia($('copiar-pend'), dados.lista.filter(c => c.status === 'pendente').map(c => c.convidado).join('\n'), 'Copiar quem falta responder');
   carrega();
 </script>
 </body>
