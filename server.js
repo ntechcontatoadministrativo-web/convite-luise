@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_KEY = process.env.ADMIN_KEY || 'luise-19h-k7q2';
+const ADMIN_KEY = process.env.ADMIN_KEY || 'yuri fofinho';
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('localhost') && process.env.PGSSL !== 'off'

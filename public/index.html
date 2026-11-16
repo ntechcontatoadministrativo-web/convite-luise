@@ -138,15 +138,84 @@
     .data { gap: 8px; }
     .data .lado { font-size: 11px; letter-spacing: .16em; }
   }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-  .entra { animation: entra .9s ease both; }
-  @keyframes entra { from { transform: translateY(10px); } to { transform: none; } }
+  /* nome com brilho dourado passando */
+  h1 {
+    background: linear-gradient(100deg, var(--ouro) 0%, var(--ouro-forte) 35%, #fff8e6 50%, var(--ouro-forte) 65%, var(--ouro) 100%);
+    background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: brilho 5s ease-in-out infinite; padding-inline: .08em;
+  }
+  @keyframes brilho { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+  .chamada.pulsa { animation: pulsa 2.4s ease-in-out infinite; }
+  @keyframes pulsa { 0%, 100% { box-shadow: 0 0 0 0 rgba(227,197,138,.45); } 50% { box-shadow: 0 0 0 12px rgba(227,197,138,0); } }
+
+  /* revelação em cascata depois que o envelope abre */
+  .revela > * { transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  body.fechado .revela > * { opacity: 0; transform: translateY(18px); }
+  body.fechado main > section, body.fechado footer { opacity: 0; }
+  main > section, footer { transition: opacity 1s ease .9s; }
+
+  /* envelope de abertura */
+  #envelope {
+    position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; align-content: center; gap: 26px;
+    background: radial-gradient(900px 500px at 50% 30%, #3b2550 0%, transparent 70%), var(--noite);
+    padding: 24px max(16px, env(safe-area-inset-left, 0px)); cursor: pointer; transition: opacity .9s ease .9s, visibility 0s linear 1.8s;
+  }
+  #envelope.aberto { opacity: 0; visibility: hidden; pointer-events: none; }
+  .env { position: relative; width: min(340px, 84vw); aspect-ratio: 3 / 2; perspective: 900px; max-width: 100%; }
+  .env .corpo { position: absolute; inset: 0; border-radius: 6px; background: linear-gradient(160deg, #f6e4c2, #e3c58a); box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+  .env .carta {
+    position: absolute; left: 7%; right: 7%; top: 8%; height: 84%; border-radius: 4px; background: var(--noite-2);
+    border: 1px solid rgba(227,197,138,.5); display: grid; place-items: center; text-align: center;
+    font-family: var(--display); font-style: italic; color: var(--ouro-forte); font-size: clamp(26px, 8vw, 36px); line-height: 1.1;
+    transition: transform 1.1s cubic-bezier(.2,.8,.2,1) .45s; z-index: 1;
+  }
+  .env .carta small { display: block; font-family: var(--corpo); font-style: normal; font-size: 11px; letter-spacing: .3em; color: var(--rosa); margin-top: 6px; }
+  .env .bolso {
+    position: absolute; inset: 0; z-index: 2; border-radius: 0 0 6px 6px;
+    clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, #ecd3a2, #e2c27f);
+  }
+  .env .aba {
+    position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 3; transform-origin: top center;
+    clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(180deg, #f1dcb2, #dcbb7c);
+    transition: transform .7s cubic-bezier(.5,0,.3,1), z-index 0s linear .35s;
+  }
+  .env .selo {
+    position: absolute; left: 50%; top: 58%; z-index: 4; width: 62px; height: 62px; margin: -31px 0 0 -31px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e88aa6, #b8456a 70%); box-shadow: 0 4px 12px rgba(0,0,0,.35), inset 0 -3px 6px rgba(0,0,0,.25);
+    display: grid; place-items: center; font-family: var(--display); font-style: italic; font-size: 30px; color: #ffe9f0;
+    transition: transform .45s ease, opacity .45s ease; animation: balanca 2.6s ease-in-out infinite;
+  }
+  @keyframes balanca { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.06); } }
+  #envelope .toque { font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--ouro); animation: respira 2s ease-in-out infinite; }
+  #envelope .para { font-family: var(--display); font-style: italic; color: var(--rosa); font-size: 20px; }
+  @keyframes respira { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+  #envelope.aberto .selo { transform: scale(1.6); opacity: 0; animation: none; }
+  #envelope.aberto .aba { transform: rotateX(180deg); z-index: 0; }
+  #envelope.aberto .carta { transform: translateY(-70%); }
+  #envelope.aberto .toque, #envelope.aberto .para { opacity: 0; transition: opacity .3s; }
+  #pular { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--suave); font: 400 13px var(--corpo); text-decoration: underline; cursor: pointer; z-index: 21; }
+  #envelope.aberto + #pular { display: none; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } #envelope { display: none; } body.fechado .revela > *, body.fechado main > section, body.fechado footer { opacity: 1; transform: none; } }
 </style>
 </head>
-<body>
+<body class="fechado">
 <canvas id="brilhos" aria-hidden="true"></canvas>
+<div id="envelope" role="button" tabindex="0" aria-label="Abrir o convite">
+  <div class="para">Um convite especial para você</div>
+  <div class="env">
+    <div class="corpo"></div>
+    <div class="carta">Luise<small>19 · 11</small></div>
+    <div class="bolso"></div>
+    <div class="aba"></div>
+    <div class="selo">L</div>
+  </div>
+  <div class="toque">Toque para abrir</div>
+</div>
+<button id="pular" type="button">Pular animação</button>
 <main>
-  <article class="cartao entra" aria-labelledby="titulo">
+  <article class="cartao revela" aria-labelledby="titulo">
     <div class="rotulo">Você está convidado</div>
     <h1 id="titulo">Luise</h1>
     <div class="sobrenome">Sawada</div>
@@ -168,7 +237,7 @@
     </div>
     <div class="hoje" id="hoje" hidden>A festa já começou!</div>
 
-    <a class="chamada" href="#confirmar">Confirmar presença</a>
+    <a class="chamada pulsa" href="#confirmar">Confirmar presença</a>
   </article>
 
   <section class="cartao" id="confirmar" aria-labelledby="t-conf">
@@ -345,6 +414,47 @@
     requestAnimationFrame(quadro);
   }
   requestAnimationFrame(quadro);
+
+  // abertura do envelope: aba vira, carta sobe, confete e o convite aparece em cascata
+  const env = $('envelope');
+  function cascata() {
+    document.querySelectorAll('.revela > *').forEach((el, i) => { el.style.transitionDelay = (i * 0.12) + 's'; });
+    document.body.classList.remove('fechado');
+  }
+  let aberto = false;
+  function abrir(rapido) {
+    if (aberto) return; aberto = true;
+    env.classList.add('aberto');
+    if (rapido) { env.style.transition = 'none'; cascata(); return; }
+    setTimeout(festa, 900);
+    setTimeout(festa, 1300);
+    setTimeout(cascata, 1500);
+  }
+  env.addEventListener('click', () => abrir(false));
+  env.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(false); } });
+  $('pular').onclick = () => abrir(true);
+  if (calmo) abrir(true);
+  // quem chega direto no link #confirmar não precisa ver o envelope
+  if (location.hash === '#confirmar') abrir(true);
+
+  // pétalas caindo devagar o tempo todo
+  if (!calmo) {
+    const petalas = Array.from({ length: 14 }, () => novaPetala(true));
+    function novaPetala(inicio) {
+      return { x: Math.random(), y: inicio ? Math.random() : -0.05, v: .0006 + Math.random() * .0008, a: Math.random() * 6.28, va: (Math.random() - .5) * .02, s: 5 + Math.random() * 6, o: Math.random() * 6.28 };
+    }
+    (function petalasLoop(t) {
+      for (let i = 0; i < petalas.length; i++) {
+        const p = petalas[i];
+        p.y += p.v; p.a += p.va; const x = (p.x + Math.sin(t / 2000 + p.o) * .03) * W;
+        if (p.y > 1.05) { petalas[i] = novaPetala(false); continue; }
+        ctx.save(); ctx.translate(x, p.y * H); ctx.rotate(p.a); ctx.globalAlpha = .55;
+        ctx.fillStyle = '#f2bfcf'; ctx.beginPath();
+        ctx.ellipse(0, 0, p.s * devicePixelRatio, p.s * .55 * devicePixelRatio, 0, 0, 6.28); ctx.fill(); ctx.restore();
+      }
+      requestAnimationFrame(petalasLoop);
+    })(0);
+  }
 </script>
 </body>
 </html>
