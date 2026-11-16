@@ -9,7 +9,9 @@
 <style>
   :root { --papel:#f8ece6; --papel-2:#fdf6f2; --vinho:#8c1c3a; --rosa:#e9a8b5; --rosa-claro:#f6d5db; --tinta:#5a2a35; --suave:#9a6f78; color-scheme: light; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--papel); color:var(--tinta); font:400 17px/1.5 "Cormorant Garamond", Georgia, serif; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
+  body { margin:0; background:var(--papel); color:var(--tinta); font:400 17px/1.5 "Cormorant Garamond", Georgia, serif;
+    padding-block: max(24px, env(safe-area-inset-top, 0px)) max(32px, env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); overflow-x: hidden; }
   main { max-width: 1000px; margin: 0 auto; display: grid; gap: 22px; }
   h1 { font: 400 52px/1 "Great Vibes", cursive; color: var(--vinho); margin: 0; }
   h2 { font: 400 34px/1 "Great Vibes", cursive; color: var(--vinho); margin: 0 0 10px; }
@@ -43,6 +45,46 @@
   .vazio { color: var(--suave); font-style: italic; margin: 0; }
   [hidden] { display: none !important; }
   #painel { display: grid; gap: 22px; }
+
+  /* celular: resumo 2×2, botões largos, convidados em 2 colunas e respostas como cartões */
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    main, #painel { gap: 16px; }
+    h1 { font-size: 42px; text-align: center; }
+    h2 { font-size: 30px; }
+    .resumo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .resumo div { min-width: 0; padding: 10px 12px; text-align: center; }
+    .resumo b { font-size: 30px; }
+    .resumo span { font-size: 11px; letter-spacing: .1em; }
+    .acoes { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .acoes button { width: 100%; padding: 12px 16px; font-size: 17px; }
+    .caixa { padding: 14px 12px; }
+    .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .conv { padding: 7px 8px; gap: 8px; }
+    .conv i { width: 22px; height: 22px; font-size: 13px; }
+    .conv b { font-size: 16px; line-height: 1.2; }
+    .conv small { font-size: 13px; }
+    form#login { display: grid; grid-template-columns: 1fr; }
+    form#login input, form#login button { width: 100%; padding: 12px 16px; }
+
+    table { min-width: 0; }
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    #linhas tr { background: #fff; border: 1px solid var(--rosa-claro); border-radius: 6px; padding: 8px 12px; margin-bottom: 8px;
+      display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; }
+    #linhas td { border: 0; padding: 2px 0; }
+    #linhas td:empty { display: none; }
+    #linhas td::before { content: attr(data-rotulo) ": "; color: var(--suave); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+    #linhas td:nth-child(1) { font-weight: 600; font-size: 18px; grid-column: 1; }
+    #linhas td:nth-child(1)::before, #linhas td:nth-child(3)::before, #linhas td:nth-child(7)::before { content: none; }
+    #linhas td:nth-child(3) { grid-column: 2; grid-row: 1; text-align: right; }
+    #linhas td:nth-child(2), #linhas td:nth-child(4), #linhas td:nth-child(5), #linhas td:nth-child(6) { grid-column: 1 / -1; }
+    #linhas td:nth-child(5) { font-style: italic; }
+    #linhas td:nth-child(7) { grid-column: 1 / -1; text-align: right; }
+    #fora tr { background: #fff; border: 1px solid var(--rosa-claro); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; }
+    #fora td { border: 0; padding: 2px 0; }
+    #fora select { width: 100%; margin-top: 6px; padding: 9px 12px; }
+  }
 </style>
 </head>
 <body>
@@ -126,7 +168,8 @@
     $('sem-resp').hidden = dados.respostas.length > 0;
     for (const d of dados.respostas) {
       const tr = document.createElement('tr');
-      const cel = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt ?? ''; if (cls) td.className = cls; tr.appendChild(td); return td; };
+      const ROTULOS = ['Escreveu', 'Na lista', 'Resposta', 'Pessoas', 'Recado', 'Quando', ''];
+      const cel = (txt, cls) => { const td = document.createElement('td'); td.textContent = txt ?? ''; if (cls) td.className = cls; td.dataset.rotulo = ROTULOS[tr.children.length]; tr.appendChild(td); return td; };
       cel(d.nome);
       cel(d.convidado || '—');
       const p = document.createElement('span'); p.className = 'pill ' + (d.vai ? 'sim' : 'nao'); p.textContent = d.vai ? 'Vai' : 'Não vai'; cel('').appendChild(p);
